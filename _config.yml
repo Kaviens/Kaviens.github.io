@@ -98,6 +98,12 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: flatpaper
 
+# Server
+server:
+  port: 4001
+  compress: false
+  header: true
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:

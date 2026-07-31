@@ -16,10 +16,6 @@ menu:
       分类:
         link: /categories/
         icon: folder
-        item:
-          关于:
-            link: /about/
-            icon: folder
       标签:
         link: /tags/
         icon: tag
@@ -93,9 +89,9 @@ profile:
     # 写法 3：完全自定义 SVG —— 提供 <path>/<circle> 等子元素字符串，
     # 容器视图框为 24x24，颜色用 currentColor
     # 知乎:
-    #   url: https://www.zhihu.com/people/yourname
-    #   tooltip: 知乎主页
-    #   svg: '<path d="M2 2 L22 22"/>'
+    # url: https://www.zhihu.com/people/yourname
+    # tooltip: 知乎主页
+    # svg: '<path d="M2 2 L22 22"/>'
   # 在 socials 区域追加一个 RSS 图标（需要装 hexo-generator-feed 并在站点 _config.yml 启用 feed）
   rss:
     enable: true
@@ -384,6 +380,8 @@ inject:
     # - <script src="/js/xxx.js"></script>
   bottom:
     # - <script src="/js/xxx.js" defer></script>
+    # BrowserSync 自动刷新脚本（开发时使用）
+    - <script id="__bs_script__">//<![CDATA[document.write("<script async src='http://HOST:3001/browser-sync/browser-sync-client.js'><\/script>".replace("HOST", location.hostname));//]]></script>
 # 分类页面设置
 category:
   # 是否以卡片形式展示（FlatPaper 通常默认就是卡片）

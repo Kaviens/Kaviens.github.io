@@ -1,29 +1,36 @@
+---
+title: web端唤醒桌面应用配置
+categories:
+  - electron
+tags:
+  - electron
+type: categories
+comments: false
+---
+
 ## electron主进程配置
 
 ### 1.自定义注册协议
 
 ```js
-
 // Windows和mac的协议注册
 if (process.defaultApp) {
   // 检查是否在开发环境下运行（通过electron命令运行）
   if (process.argv.length >= 2) {
     // 检查是否有足够的命令行参数
-    app.setAsDefaultProtocolClient('ketang-clients', process.execPath, [
-      join(__dirname, process.argv[1])
-    ])
+    app.setAsDefaultProtocolClient("ketang-clients", process.execPath, [
+      join(__dirname, process.argv[1]),
+    ]);
     // 注册协议处理器，包含执行路径和脚本路径
   }
 } else {
-    //但是不要用这个，因为后面我们用了nsh
-  app.setAsDefaultProtocolClient('ketang-clients')
+  //但是不要用这个，因为后面我们用了nsh
+  app.setAsDefaultProtocolClient("ketang-clients");
   // 生产环境下直接注册协议处理器
 }
 
 //注意ketang-clients是和电脑注册表，electron-build打包工具绑定在一起的，下面代码会讲
 ```
-
-
 
 ## 2.处理web点击按钮首次唤醒桌面应用参数处理
 
@@ -39,7 +46,7 @@ if (process.platform === 'win32') {
     // 检查是否有额外的启动参数（第一个参数是执行文件路径）
     const protocolUrl = args[args.length - 1]
     // 获取最后一个参数，通常是协议URL（如：ketang-clients://xxx?xxx）
-    
+
     const params = parseCustomUrl(protocolUrl)
     // 调用解析函数，从协议URL中提取参数
     const result = {
@@ -67,9 +74,9 @@ if (process.platform === 'darwin') {
   // macOS
   app.on('open-url', (event, url) => {  // 去掉下划线，使用url参数
     event.preventDefault()
-    
+
     console.log('macOS收到协议URL:', url)  // 调试用
-    
+
     // 解析参数
     const params = parseCustomUrl(url)
     if (params.ipSegments && params.roomId) {
@@ -77,18 +84,18 @@ if (process.platform === 'darwin') {
         ipSegments: params.ipSegments.split('.'),
         roomId: params.roomId
       }
-      
+
       // 保存参数
       store.set('userSettings', result)
       console.log('保存参数:', result)
     }
-    
+
     // 处理窗口显示
     if (mainWindow) {
       if (mainWindow.isMinimized()) mainWindow.restore()
       mainWindow.show()
       mainWindow.focus()
-      
+
       // 向渲染进程发送参数
       if (mainWindow.webContents.isLoading()) {
         mainWindow.webContents.once('did-finish-load', () => {
@@ -160,10 +167,6 @@ if (!gotTheLock) {
   })
 }
 ```
-
-
-
-
 
 ## electron-builder.yml配置(根据不同需求配置不同)
 
@@ -273,26 +276,21 @@ nsis:
     //my-app.exe这代表着要关联的应用程序路径，也是设置的核心要和electron-builder.yml里面的executableName一致
   ; 强制结束进程
   nsExec::ExecToLog 'taskkill /f /im "my-app.exe"'
-  
+
   ; 删除启动项
   DeleteRegValue HKCU "Software\\Microsoft\\Windows\\CurrentVersion\\Run" "智能课堂系统字幕客户端"
-  
+
   ; 删除桌面快捷方式
   Delete "$DESKTOP\\智能课堂系统字幕客户端.lnk"
-  
+
   ; 删除开始菜单快捷方式
   RMDir /r "$SMPROGRAMS\\智能课堂系统字幕客户端"
 !macroend
 
 ```
 
-
-
-
-
 ## web端使用
 
 ```
  window.location.href = "ceshi-clients://launch?ipSegments=114.17.19.113&roomId=1&BrowserId=313135&SeqId=213251"
 ```
-
