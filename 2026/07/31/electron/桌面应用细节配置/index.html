@@ -1,0 +1,781 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
+
+<title>桌面应用细节配置 | 大前端博客</title>
+<meta name="description" content="桌面应用细节配置（以electron-vite框架为例）创建第二个窗口在主进程窗口底下创建一个差不多的参数的窗口1234567891011121314 let settingsWindow: BrowserWindow | null &#x3D; nullsettingsWindow &#x3D; new BrowserWindow(&#123; width: 430, hei...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="桌面应用细节配置 | 大前端博客">
+<meta property="og:url" content="http://example.com/2026/07/31/electron/%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E7%BB%86%E8%8A%82%E9%85%8D%E7%BD%AE/">
+<meta property="og:site_name" content="大前端博客">
+<meta property="og:description" content="桌面应用细节配置（以electron-vite框架为例）创建第二个窗口在主进程窗口底下创建一个差不多的参数的窗口1234567891011121314 let settingsWindow: BrowserWindow | null &#x3D; nullsettingsWindow &#x3D; new BrowserWindow(&#123; width: 430, hei...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-31T07:39:55.265Z">
+<meta property="article:modified_time" content="2026-08-04T02:24:05.914Z">
+<meta property="article:author" content="Jie">
+<meta property="article:tag" content="electron">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="http://example.com/2026/07/31/electron/%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E7%BB%86%E8%8A%82%E9%85%8D%E7%BD%AE/">
+
+<link rel="icon" href="/images/favicon.png" type="image/png">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"桌面应用细节配置","name":"桌面应用细节配置 | 大前端博客","description":"桌面应用细节配置（以electron-vite框架为例）创建第二个窗口在主进程窗口底下创建一个差不多的参数的窗口1234567891011121314 let settingsWindow: BrowserWindow | null = nullsettingsWindow = new BrowserWindow(&#123; width: 430, hei...","url":"http://example.com/2026/07/31/electron/%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E7%BB%86%E8%8A%82%E9%85%8D%E7%BD%AE/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"大前端博客","url":"http://example.com/"},"mainEntityOfPage":"http://example.com/2026/07/31/electron/%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E7%BB%86%E8%8A%82%E9%85%8D%E7%BD%AE/","datePublished":"2026-07-31T07:39:55.265Z","dateModified":"2026-08-04T02:24:05.914Z","author":{"@type":"Person","name":"Jie"},"publisher":{"@type":"Organization","name":"大前端博客"},"keywords":"electron"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'green';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'green';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body
+  class="is-post tag-style-tape bg-style-default"
+  data-default-accent="green"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="circle"
+  data-strong-accent="on"
+>
+  
+    <div class="page-grain"></div>
+  
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-menu"></use></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <a class="brand-mark" href="/" aria-label="FlatPaper 首页">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-layout-grid"></use></svg>
+
+        </a>
+      
+    </div>
+    <a class="brand-text" href="/">大前端博客</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/about">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/about/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-user"></use></svg>
+
+          <span>关于</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                <span>标签</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                <span>归档</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-palette"></use></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-sun"></use></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-moon"></use></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/about">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <a class="" href="/about/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-user"></use></svg>
+
+            <span>关于</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                  <span>标签</span>
+                </a>
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                  <span>归档</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar" aria-hidden="true">
+        <span></span><i></i><em></em><b></b>
+      </div>
+    
+    <h3>Jie</h3>
+    <p class="profile-role">日常记录</p>
+    <p>天行健，君子以自强不息。</p>
+    
+    <div class="socials">
+      
+      
+        
+        
+        <a href="/atom.xml" aria-label="RSS feed" data-tooltip="RSS feed">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-rss"></use></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%BA%8C%E4%B8%AA%E7%AA%97%E5%8F%A3"><span class="toc-text">创建第二个窗口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E4%B8%BB%E8%BF%9B%E7%A8%8B%E7%AA%97%E5%8F%A3%E5%BA%95%E4%B8%8B%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B7%AE%E4%B8%8D%E5%A4%9A%E7%9A%84%E5%8F%82%E6%95%B0%E7%9A%84%E7%AA%97%E5%8F%A3"><span class="toc-text">在主进程窗口底下创建一个差不多的参数的窗口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E6%AC%A1%E5%9C%A8dev%E7%8E%AF%E5%A2%83%E5%92%8Cprod%E7%8E%AF%E5%A2%83%E6%89%93%E5%BC%80%E7%AA%97%E5%8F%A3%E6%96%B9%E5%BC%8F%E6%98%AF%E4%B8%8D%E4%B8%80%E6%A0%B7%E7%9A%84"><span class="toc-text">其次在dev环境和prod环境打开窗口方式是不一样的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8C%85%E6%97%B6%E9%85%8D%E7%BD%AE%EF%BC%88%E8%A6%81%E5%85%88%E5%9C%A8electron-vite-config%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE%EF%BC%89"><span class="toc-text">打包时配置（要先在electron.vite.config进行配置）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA-HTML-%E9%83%BD%E8%A6%81%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84-JS-%E5%85%A5%E5%8F%A3"><span class="toc-text">每个 HTML 都要有自己的 JS 入口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Electron-%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F"><span class="toc-text">Electron 日志系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-electron-log"><span class="toc-text">安装 electron-log</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%BF%9B%E7%A8%8B%E9%87%8C%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97"><span class="toc-text">主进程里使用日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%E9%87%8C%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97"><span class="toc-text">渲染进程里使用日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A9%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%97%A5%E5%BF%97%E4%B9%9F%E5%86%99%E5%88%B0%E6%96%87%E4%BB%B6%E9%87%8C"><span class="toc-text">让渲染进程的日志也写到文件里</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E5%9C%A8%E5%93%AA%EF%BC%9F%E6%80%8E%E4%B9%88%E8%AE%A9%E7%94%A8%E6%88%B7%E5%8F%91%E7%BB%99%E4%BD%A0%EF%BC%9F"><span class="toc-text">日志文件在哪？怎么让用户发给你？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="toc-text">日志格式自定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E4%B8%BB%E8%BF%9B%E7%A8%8B%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE%EF%BC%88%E7%9B%B4%E6%8E%A5%E6%8A%84%EF%BC%89"><span class="toc-text">完整的主进程日志配置（直接抄）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0%EF%BC%88electron-updater%EF%BC%89"><span class="toc-text">自动更新（electron-updater）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B%E5%85%88%E6%90%9E%E6%87%82"><span class="toc-text">2.1 整体流程先搞懂</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%89%E8%A3%85-electron-updater"><span class="toc-text">2.2 安装 electron-updater</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E9%85%8D%E7%BD%AE-electron-builder-yml-%E7%9A%84-publish-%E9%83%A8%E5%88%86"><span class="toc-text">2.3 配置 electron-builder.yml 的 publish 部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E4%B8%BB%E8%BF%9B%E7%A8%8B%E9%87%8C%E9%85%8D%E7%BD%AE%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0%EF%BC%88%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%E7%9B%B4%E6%8E%A5%E6%8A%84%EF%BC%89"><span class="toc-text">2.4 主进程里配置自动更新（完整代码直接抄）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%EF%BC%88Vue-%E9%A1%B5%E9%9D%A2%EF%BC%89%E6%80%8E%E4%B9%88%E9%85%8D%E5%90%88%E6%98%BE%E7%A4%BA%E6%9B%B4%E6%96%B0-UI"><span class="toc-text">2.5 渲染进程（Vue 页面）怎么配合显示更新 UI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E4%B8%BB%E8%BF%9B%E7%A8%8B%E5%8A%A0%E4%B8%80%E4%B8%AA%E8%8E%B7%E5%8F%96%E7%89%88%E6%9C%AC%E5%8F%B7%E7%9A%84-handler"><span class="toc-text">2.6 主进程加一个获取版本号的 handler</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NSIS-%E5%AE%89%E8%A3%85%E5%8C%85%E7%9B%AE%E5%BD%95%E9%85%8D%E7%BD%AE%E2%80%94%E2%80%94%E8%AE%A9%E7%94%A8%E6%88%B7%E8%A3%85%E5%88%B0%E4%BD%A0%E6%83%B3%E8%AE%A9%E4%BB%96%E8%A3%85%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-text">NSIS 安装包目录配置——让用户装到你想让他装的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E6%90%9E%E6%87%82%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA"><span class="toc-text">先搞懂默认行为</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B9%E5%AE%89%E8%A3%85%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E5%90%8D%E5%AD%97%EF%BC%88%E4%B8%8D%E5%8F%AB-my-app%EF%BC%89"><span class="toc-text">改安装文件夹的名字（不叫 my-app）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A9%E7%94%A8%E6%88%B7%E8%87%AA%E5%B7%B1%E9%80%89%E5%AE%89%E8%A3%85%E4%BD%8D%E7%BD%AE"><span class="toc-text">让用户自己选安装位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E5%AE%89%E8%A3%85%E5%88%B0-D-%E7%9B%98%EF%BC%88%E6%88%96%E5%85%B6%E4%BB%96%E7%9B%98%EF%BC%89"><span class="toc-text">设置默认安装到 D 盘（或其他盘）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E5%AE%89%E8%A3%85%E5%88%B0%E5%9B%BA%E5%AE%9A%E4%BD%8D%E7%BD%AE%EF%BC%88%E4%B8%8D%E8%AE%A9%E7%94%A8%E6%88%B7%E6%94%B9%EF%BC%89"><span class="toc-text">强制安装到固定位置（不让用户改）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#perMachine-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E5%BD%B1%E5%93%8D%E5%AE%89%E8%A3%85%E4%BD%8D%E7%BD%AE%EF%BC%89"><span class="toc-text">perMachine 的区别（影响安装位置）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84-electron-builder-yml-NSIS-%E9%85%8D%E7%BD%AE%EF%BC%88%E7%9B%B4%E6%8E%A5%E6%8A%84%EF%BC%89"><span class="toc-text">完整的 electron-builder.yml NSIS 配置（直接抄）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-8-%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%A0%E4%B8%AA%E5%8F%98%E9%87%8F"><span class="toc-text">5.8 安装路径相关的几个变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-9-%E5%8D%B8%E8%BD%BD%E6%97%B6%E8%87%AA%E5%8A%A8%E5%85%B3%E9%97%AD%E6%AD%A3%E5%9C%A8%E8%BF%90%E8%A1%8C%E7%9A%84%E7%A8%8B%E5%BA%8F"><span class="toc-text">5.9 卸载时自动关闭正在运行的程序</span></a></li></ol></li></ol>
+          
+        </div>
+      </section>
+      
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper">
+  
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/electron/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+        electron
+      </a>
+    
+    <h1>桌面应用细节配置</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-07-31</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/electron/">#electron</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <h1 id="桌面应用细节配置（以electron-vite框架为例）"><a href="#桌面应用细节配置（以electron-vite框架为例）" class="headerlink" title="桌面应用细节配置（以electron-vite框架为例）"></a>桌面应用细节配置（以electron-vite框架为例）</h1><h2 id="创建第二个窗口"><a href="#创建第二个窗口" class="headerlink" title="创建第二个窗口"></a>创建第二个窗口</h2><h3 id="在主进程窗口底下创建一个差不多的参数的窗口"><a href="#在主进程窗口底下创建一个差不多的参数的窗口" class="headerlink" title="在主进程窗口底下创建一个差不多的参数的窗口"></a>在主进程窗口底下创建一个差不多的参数的窗口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> let settingsWindow: BrowserWindow | null = null</span><br><span class="line">settingsWindow = new BrowserWindow(&#123;</span><br><span class="line">     width: 430,</span><br><span class="line">     height: 280,</span><br><span class="line">     show: false,</span><br><span class="line">     autoHideMenuBar: true,</span><br><span class="line">     fullscreen: false,</span><br><span class="line">     skipTaskbar: true,</span><br><span class="line">     frame: false,</span><br><span class="line">     webPreferences: &#123;</span><br><span class="line">       preload: join(__dirname, &#x27;../preload/index.js&#x27;),</span><br><span class="line">       sandbox: false</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="其次在dev环境和prod环境打开窗口方式是不一样的"><a href="#其次在dev环境和prod环境打开窗口方式是不一样的" class="headerlink" title="其次在dev环境和prod环境打开窗口方式是不一样的"></a>其次在dev环境和prod环境打开窗口方式是不一样的</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 如果是开发环境，则使用electron-vite的代理服务器加载页面</span><br><span class="line">// 其中is.dev是electron-vite内置的判断开发环境的变量，process.env[&#x27;ELECTRON_RENDERER_URL&#x27;]是electron-vite内置的环境变量。</span><br><span class="line">//loadURL是加载本地开发环境的页面，loadFile是加载打包后的生产环境页面。</span><br><span class="line"></span><br><span class="line">    if (is.dev &amp;&amp; process.env[&#x27;ELECTRON_RENDERER_URL&#x27;]) &#123;</span><br><span class="line">      settingsWindow.loadURL(process.env[&#x27;ELECTRON_RENDERER_URL&#x27;] + &#x27;/settings.html&#x27;).then(() =&gt; &#123;</span><br><span class="line">        settingsWindow?.show()</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 修改生产环境路径</span><br><span class="line">      settingsWindow.loadFile(join(__dirname, &#x27;../renderer/settings.html&#x27;)).then(() =&gt; &#123;</span><br><span class="line">        settingsWindow?.show()</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="打包时配置（要先在electron-vite-config进行配置）"><a href="#打包时配置（要先在electron-vite-config进行配置）" class="headerlink" title="打包时配置（要先在electron.vite.config进行配置）"></a>打包时配置（要先在electron.vite.config进行配置）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">// 打包时配置</span><br><span class="line"> renderer: &#123;</span><br><span class="line">    resolve: &#123;</span><br><span class="line">      alias: &#123;</span><br><span class="line">        &#x27;@&#x27;: resolve(__dirname, &#x27;./src/renderer/src&#x27;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [vue()],</span><br><span class="line">    build: &#123;</span><br><span class="line">      /** 打包输出目录 */</span><br><span class="line">      rollupOptions: &#123;</span><br><span class="line">        /** 打包入口文件 */</span><br><span class="line">        input: &#123;</span><br><span class="line">          index: resolve(__dirname, &#x27;src/renderer/index.html&#x27;),</span><br><span class="line">          settings: resolve(__dirname, &#x27;src/renderer/settings.html&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    server: &#123;</span><br><span class="line">      /** 设置 host: true 才可以使用 Network 的形式，以 IP 访问项目 */</span><br><span class="line">      host: true, // host: &quot;0.0.0.0&quot;</span><br><span class="line">      /** 端口号 */</span><br><span class="line">      port: 3333,</span><br><span class="line">      /** 是否自动打开浏览器 */</span><br><span class="line">      open: false,</span><br><span class="line">      /** 跨域设置允许 */</span><br><span class="line">      cors: true,</span><br><span class="line">      /** 端口被占用时，是否直接退出 */</span><br><span class="line">      strictPort: false,</span><br><span class="line">      /** 接口代理 */</span><br><span class="line">      proxy: &#123;</span><br><span class="line">        &#x27;/itc&#x27;: &#123;</span><br><span class="line">          target: &#x27;http://172.16.19.122:8800/itc&#x27;,</span><br><span class="line">          ws: true,</span><br><span class="line">          /** 是否允许跨域 */</span><br><span class="line">          changeOrigin: true,</span><br><span class="line">          rewrite: (path) =&gt; path.replace(&#x27;/itc&#x27;, &#x27;&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="每个-HTML-都要有自己的-JS-入口"><a href="#每个-HTML-都要有自己的-JS-入口" class="headerlink" title="每个 HTML 都要有自己的 JS 入口"></a>每个 HTML 都要有自己的 JS 入口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- src/renderer/index.html --&gt;</span><br><span class="line">&lt;script type=&quot;module&quot; src=&quot;/src/main.ts&quot;&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- src/renderer/settings.html --&gt;</span><br><span class="line">&lt;script type=&quot;module&quot; src=&quot;/src/settings.ts&quot;&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">//同时也要和main.ts一样有相对应的入口文件</span><br><span class="line"></span><br><span class="line">import &#x27;./assets/main.css&#x27;</span><br><span class="line"></span><br><span class="line">import &#123; createApp &#125; from &#x27;vue&#x27;</span><br><span class="line">import App from &#x27;./settingApp.vue&#x27;</span><br><span class="line">import * as ElementPlusIconsVue from &#x27;@element-plus/icons-vue&#x27;</span><br><span class="line">import ElementPlus from &#x27;element-plus&#x27;</span><br><span class="line">import &#x27;element-plus/dist/index.css&#x27;</span><br><span class="line">import store from &#x27;./store/index&#x27;</span><br><span class="line">const app = createApp(App)</span><br><span class="line">for (const [key, component] of Object.entries(ElementPlusIconsVue)) &#123;</span><br><span class="line">  app.component(key, component)</span><br><span class="line">&#125;</span><br><span class="line">app.use(store)</span><br><span class="line">app.use(ElementPlus)</span><br><span class="line">app.mount(&#x27;#settingApp&#x27;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Electron-日志系统"><a href="#Electron-日志系统" class="headerlink" title="Electron 日志系统"></a>Electron 日志系统</h2><h3 id="安装-electron-log"><a href="#安装-electron-log" class="headerlink" title="安装 electron-log"></a>安装 electron-log</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install electron-log</span><br></pre></td></tr></table></figure>
+
+<p>就这一个包，主进程和渲染进程都能用，不用配一堆东西。</p>
+<h3 id="主进程里使用日志"><a href="#主进程里使用日志" class="headerlink" title="主进程里使用日志"></a>主进程里使用日志</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/index.ts 顶部引入</span></span><br><span class="line"><span class="keyword">import</span> log <span class="keyword">from</span> <span class="string">&quot;electron-log/main&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化（一定要在 app.whenReady() 之前调用）</span></span><br><span class="line">log.<span class="title function_">initialize</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置日志文件存放路径（可选，默认在用户目录下）</span></span><br><span class="line"><span class="comment">// Windows: C:\Users\用户名\AppData\Roaming\my-app\logs\main.log</span></span><br><span class="line"><span class="comment">// Mac: ~/Library/Logs/my-app/main.log</span></span><br><span class="line">log.<span class="property">transports</span>.<span class="property">file</span>.<span class="property">resolvePathFn</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">join</span>(app.<span class="title function_">getPath</span>(<span class="string">&quot;userData&quot;</span>), <span class="string">&quot;logs&quot;</span>, <span class="string">&quot;main.log&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置日志文件大小上限（超过自动切割，防止日志文件太大）</span></span><br><span class="line">log.<span class="property">transports</span>.<span class="property">file</span>.<span class="property">maxSize</span> = <span class="number">5</span> * <span class="number">1024</span> * <span class="number">1024</span>; <span class="comment">// 5MB</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 然后就可以到处用了</span></span><br><span class="line">log.<span class="title function_">info</span>(<span class="string">&quot;应用启动了&quot;</span>);</span><br><span class="line">log.<span class="title function_">error</span>(<span class="string">&quot;出错了：&quot;</span>, someError);</span><br><span class="line">log.<span class="title function_">warn</span>(<span class="string">&quot;警告信息&quot;</span>);</span><br><span class="line">log.<span class="title function_">debug</span>(<span class="string">&quot;调试信息&quot;</span>); <span class="comment">// debug 级别默认不写文件，只输出到控制台</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="渲染进程里使用日志"><a href="#渲染进程里使用日志" class="headerlink" title="渲染进程里使用日志"></a>渲染进程里使用日志</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 Vue 页面里直接用</span></span><br><span class="line"><span class="keyword">import</span> log <span class="keyword">from</span> <span class="string">&quot;electron-log/renderer&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用法和主进程一模一样</span></span><br><span class="line">log.<span class="title function_">info</span>(<span class="string">&quot;用户点击了按钮&quot;</span>);</span><br><span class="line">log.<span class="title function_">error</span>(<span class="string">&quot;接口请求失败：&quot;</span>, error);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 Vue 组件里的用法</span></span><br><span class="line"><span class="keyword">import</span> &#123; onMounted &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> log <span class="keyword">from</span> <span class="string">&quot;electron-log/renderer&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">onMounted</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  log.<span class="title function_">info</span>(<span class="string">&quot;主窗口已加载完成&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="让渲染进程的日志也写到文件里"><a href="#让渲染进程的日志也写到文件里" class="headerlink" title="让渲染进程的日志也写到文件里"></a>让渲染进程的日志也写到文件里</h3><p>默认情况下，渲染进程的 <code>electron-log</code> 只输出到 DevTools 控制台。要让它也写到文件，需要在主进程里做一下配置：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/index.ts</span></span><br><span class="line"><span class="keyword">import</span> log <span class="keyword">from</span> <span class="string">&quot;electron-log/main&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 app.whenReady() 里调用</span></span><br><span class="line">app.<span class="title function_">whenReady</span>().<span class="title function_">then</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 初始化日志，这一步会让渲染进程的日志也走主进程的文件写入</span></span><br><span class="line">  log.<span class="title function_">initialize</span>(&#123; <span class="attr">preload</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ... 其他初始化代码</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>大白话解释：</strong> <code>preload: true</code> 的意思是”在 preload 脚本里注入日志功能”，这样渲染进程调用 <code>log.info()</code> 的时候，实际上是发消息给主进程，由主进程统一写文件。</p>
+</blockquote>
+<h3 id="日志文件在哪？怎么让用户发给你？"><a href="#日志文件在哪？怎么让用户发给你？" class="headerlink" title="日志文件在哪？怎么让用户发给你？"></a>日志文件在哪？怎么让用户发给你？</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在主进程里获取日志文件路径</span></span><br><span class="line"><span class="keyword">import</span> log <span class="keyword">from</span> <span class="string">&quot;electron-log/main&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> logPath = log.<span class="property">transports</span>.<span class="property">file</span>.<span class="title function_">getFile</span>().<span class="property">path</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;日志文件路径：&quot;</span>, logPath);</span><br><span class="line"><span class="comment">// Windows 输出类似：C:\Users\lij\AppData\Roaming\my-app\logs\main.log</span></span><br></pre></td></tr></table></figure>
+
+<p>你也可以加一个 IPC 接口，让设置页面有个”打开日志目录”按钮：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主进程</span></span><br><span class="line"><span class="keyword">import</span> &#123; shell &#125; <span class="keyword">from</span> <span class="string">&quot;electron&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> log <span class="keyword">from</span> <span class="string">&quot;electron-log/main&quot;</span>;</span><br><span class="line"></span><br><span class="line">ipcMain.<span class="title function_">on</span>(<span class="string">&quot;open-log-folder&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> logPath = log.<span class="property">transports</span>.<span class="property">file</span>.<span class="title function_">getFile</span>().<span class="property">path</span>;</span><br><span class="line">  <span class="comment">// 在文件管理器里打开并选中这个文件</span></span><br><span class="line">  shell.<span class="title function_">showItemInFolder</span>(logPath);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 渲染进程（Vue 页面里）</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="property">api</span>.<span class="title function_">send</span>(<span class="string">&quot;open-log-folder&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>给不了的话就这样也能看，在用户电脑上看</p>
+<p>右键 PowerShell-“以管理员身份运行”，然后再执行:<br>Start-Process “C:\Program Files\ifts_clients\ifts_clients.exe” -Verb runAs 中间的安装的位置换成你的安装位置，然后就能打开了。</p>
+<h3 id="日志格式自定义"><a href="#日志格式自定义" class="headerlink" title="日志格式自定义"></a>日志格式自定义</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置日志输出格式</span></span><br><span class="line">log.<span class="property">transports</span>.<span class="property">file</span>.<span class="property">format</span> = <span class="string">&quot;[&#123;y&#125;-&#123;m&#125;-&#123;d&#125; &#123;h&#125;:&#123;i&#125;:&#123;s&#125;.&#123;ms&#125;] [&#123;level&#125;] &#123;text&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出效果：</span></span><br><span class="line"><span class="comment">// [2026-07-31 16:00:00.123] [info] 应用启动了</span></span><br><span class="line"><span class="comment">// [2026-07-31 16:00:01.456] [error] 出错了：xxx</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="完整的主进程日志配置（直接抄）"><a href="#完整的主进程日志配置（直接抄）" class="headerlink" title="完整的主进程日志配置（直接抄）"></a>完整的主进程日志配置（直接抄）</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/index.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; app &#125; <span class="keyword">from</span> <span class="string">&quot;electron&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> log <span class="keyword">from</span> <span class="string">&quot;electron-log/main&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; join &#125; <span class="keyword">from</span> <span class="string">&quot;path&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====== 日志配置（放在文件最顶部，app.whenReady 之前） ======</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 初始化日志系统</span></span><br><span class="line">log.<span class="title function_">initialize</span>(&#123; <span class="attr">preload</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 设置日志文件路径</span></span><br><span class="line">log.<span class="property">transports</span>.<span class="property">file</span>.<span class="property">resolvePathFn</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">join</span>(app.<span class="title function_">getPath</span>(<span class="string">&quot;userData&quot;</span>), <span class="string">&quot;logs&quot;</span>, <span class="string">&quot;main.log&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 设置日志文件大小上限</span></span><br><span class="line">log.<span class="property">transports</span>.<span class="property">file</span>.<span class="property">maxSize</span> = <span class="number">5</span> * <span class="number">1024</span> * <span class="number">1024</span>; <span class="comment">// 5MB</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 设置日志格式</span></span><br><span class="line">log.<span class="property">transports</span>.<span class="property">file</span>.<span class="property">format</span> = <span class="string">&quot;[&#123;y&#125;-&#123;m&#125;-&#123;d&#125; &#123;h&#125;:&#123;i&#125;:&#123;s&#125;.&#123;ms&#125;] [&#123;level&#125;] &#123;text&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 设置控制台输出格式（开发时用）</span></span><br><span class="line">log.<span class="property">transports</span>.<span class="property">console</span>.<span class="property">format</span> = <span class="string">&quot;[&#123;h&#125;:&#123;i&#125;:&#123;s&#125;.&#123;ms&#125;] [&#123;level&#125;] &#123;text&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. 设置日志级别（生产环境只记 info 及以上，开发环境记所有）</span></span><br><span class="line">log.<span class="property">transports</span>.<span class="property">file</span>.<span class="property">level</span> = <span class="string">&quot;info&quot;</span>;</span><br><span class="line">log.<span class="property">transports</span>.<span class="property">console</span>.<span class="property">level</span> =</span><br><span class="line">  process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&quot;development&quot;</span> ? <span class="string">&quot;debug&quot;</span> : <span class="string">&quot;info&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====== 日志配置结束 ======</span></span><br><span class="line"></span><br><span class="line">log.<span class="title function_">info</span>(<span class="string">&quot;========== 应用启动 ==========&quot;</span>);</span><br><span class="line">log.<span class="title function_">info</span>(<span class="string">&quot;版本号：&quot;</span>, app.<span class="title function_">getVersion</span>());</span><br><span class="line">log.<span class="title function_">info</span>(<span class="string">&quot;系统：&quot;</span>, process.<span class="property">platform</span>, process.<span class="property">arch</span>);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">whenReady</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  log.<span class="title function_">info</span>(<span class="string">&quot;应用 ready，开始创建窗口...&quot;</span>);</span><br><span class="line">  <span class="title function_">createWindow</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="自动更新（electron-updater）"><a href="#自动更新（electron-updater）" class="headerlink" title="自动更新（electron-updater）"></a>自动更新（electron-updater）</h2><h3 id="2-1-整体流程先搞懂"><a href="#2-1-整体流程先搞懂" class="headerlink" title="2.1 整体流程先搞懂"></a>2.1 整体流程先搞懂</h3><p>自动更新的核心流程是这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 你开发完代码，版本号从 2.0.3 改成 2.0.4</span><br><span class="line">2. 执行打包命令，生成安装包 + latest.yml 文件</span><br><span class="line">3. 把打包出来的文件上传到你的服务器（比如 http://172.16.19.122:8800/update/）</span><br><span class="line">4. 用户打开旧版本的客户端</span><br><span class="line">5. 客户端启动时自动请求服务器上的 latest.yml</span><br><span class="line">6. 对比版本号，发现服务器上是 2.0.4，本地是 2.0.3</span><br><span class="line">7. 弹出提示&quot;有新版本&quot;，用户点击&quot;更新&quot;</span><br><span class="line">8. 客户端自动下载安装包，下载完自动安装</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-安装-electron-updater"><a href="#2-2-安装-electron-updater" class="headerlink" title="2.2 安装 electron-updater"></a>2.2 安装 electron-updater</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install electron-updater</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong> 项目里已经装过了（<code>package.json</code> 里有 <code>&quot;electron-updater&quot;: &quot;^6.1.7&quot;</code>），不用重复装。</p>
+</blockquote>
+<h3 id="2-3-配置-electron-builder-yml-的-publish-部分"><a href="#2-3-配置-electron-builder-yml-的-publish-部分" class="headerlink" title="2.3 配置 electron-builder.yml 的 publish 部分"></a>2.3 配置 electron-builder.yml 的 publish 部分</h3><p>这是告诉 electron-updater “去哪里检查更新”的关键配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># electron-builder.yml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他配置...</span></span><br><span class="line"></span><br><span class="line"><span class="attr">publish:</span></span><br><span class="line">  <span class="attr">provider:</span> <span class="string">generic</span> <span class="comment"># 使用通用 HTTP 服务器（不是 GitHub，不是 S3）</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">http://172.16.19.122:8800/update</span> <span class="comment"># 你的更新文件存放地址</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>大白话解释：</strong></p>
+<ul>
+<li><code>provider: generic</code> → 意思是用一个普通的 HTTP 服务器来存放更新文件</li>
+<li><code>url</code> → 客户端启动后会去这个地址下载 <code>latest.yml</code>，看看有没有新版本</li>
+<li>这个地址下必须能访问到 <code>latest.yml</code> 文件和安装包文件</li>
+</ul>
+</blockquote>
+<h3 id="2-4-主进程里配置自动更新（完整代码直接抄）"><a href="#2-4-主进程里配置自动更新（完整代码直接抄）" class="headerlink" title="2.4 主进程里配置自动更新（完整代码直接抄）"></a>2.4 主进程里配置自动更新（完整代码直接抄）</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/index.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; autoUpdater &#125; <span class="keyword">from</span> <span class="string">&quot;electron-updater&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> log <span class="keyword">from</span> <span class="string">&quot;electron-log/main&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====== 自动更新配置函数 ======</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">setupAutoUpdater</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 设置更新服务器地址（和 electron-builder.yml 里的 publish.url 保持一致）</span></span><br><span class="line">  autoUpdater.<span class="title function_">setFeedURL</span>(&#123;</span><br><span class="line">    <span class="attr">provider</span>: <span class="string">&quot;generic&quot;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&quot;http://172.16.19.122:8800/update&quot;</span>,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 是否自动下载更新（true = 检测到新版本就自动下载，不等用户确认）</span></span><br><span class="line">  autoUpdater.<span class="property">autoDownload</span> = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 是否自动安装更新（true = 下载完自动退出并安装）</span></span><br><span class="line">  autoUpdater.<span class="property">autoInstallOnAppQuit</span> = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 日志输出到 electron-log</span></span><br><span class="line">  autoUpdater.<span class="property">logger</span> = log;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ====== 监听各种事件 ======</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查更新出错（比如网络不通、服务器挂了）</span></span><br><span class="line">  autoUpdater.<span class="title function_">on</span>(<span class="string">&quot;error&quot;</span>, <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">    log.<span class="title function_">error</span>(<span class="string">&quot;自动更新出错：&quot;</span>, error);</span><br><span class="line">    <span class="comment">// 可以通知渲染进程显示错误提示</span></span><br><span class="line">    mainWindow?.<span class="property">webContents</span>.<span class="title function_">send</span>(<span class="string">&quot;update-error&quot;</span>, error.<span class="property">message</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 正在检查更新</span></span><br><span class="line">  autoUpdater.<span class="title function_">on</span>(<span class="string">&quot;checking-for-update&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    log.<span class="title function_">info</span>(<span class="string">&quot;正在检查更新...&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检测到有新版本</span></span><br><span class="line">  autoUpdater.<span class="title function_">on</span>(<span class="string">&quot;update-available&quot;</span>, <span class="function">(<span class="params">info</span>) =&gt;</span> &#123;</span><br><span class="line">    log.<span class="title function_">info</span>(<span class="string">&quot;发现新版本：&quot;</span>, info.<span class="property">version</span>);</span><br><span class="line">    <span class="comment">// 通知渲染进程&quot;有新版本可用&quot;</span></span><br><span class="line">    mainWindow?.<span class="property">webContents</span>.<span class="title function_">send</span>(<span class="string">&quot;update-available&quot;</span>, &#123;</span><br><span class="line">      <span class="attr">version</span>: info.<span class="property">version</span>, <span class="comment">// 新版本号</span></span><br><span class="line">      <span class="attr">releaseDate</span>: info.<span class="property">releaseDate</span>, <span class="comment">// 发布日期</span></span><br><span class="line">      <span class="attr">releaseNotes</span>: info.<span class="property">releaseNotes</span>, <span class="comment">// 更新说明</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 当前已是最新版本</span></span><br><span class="line">  autoUpdater.<span class="title function_">on</span>(<span class="string">&quot;update-not-available&quot;</span>, <span class="function">(<span class="params">info</span>) =&gt;</span> &#123;</span><br><span class="line">    log.<span class="title function_">info</span>(<span class="string">&quot;当前已是最新版本：&quot;</span>, info.<span class="property">version</span>);</span><br><span class="line">    mainWindow?.<span class="property">webContents</span>.<span class="title function_">send</span>(<span class="string">&quot;update-not-available&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 下载进度</span></span><br><span class="line">  autoUpdater.<span class="title function_">on</span>(<span class="string">&quot;download-progress&quot;</span>, <span class="function">(<span class="params">progress</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> percent = <span class="title class_">Math</span>.<span class="title function_">round</span>(progress.<span class="property">percent</span>);</span><br><span class="line">    log.<span class="title function_">info</span>(<span class="string">`下载进度：<span class="subst">$&#123;percent&#125;</span>%`</span>);</span><br><span class="line">    <span class="comment">// 通知渲染进程显示进度条</span></span><br><span class="line">    mainWindow?.<span class="property">webContents</span>.<span class="title function_">send</span>(<span class="string">&quot;download-progress&quot;</span>, &#123;</span><br><span class="line">      <span class="attr">percent</span>: percent,</span><br><span class="line">      <span class="attr">bytesPerSecond</span>: progress.<span class="property">bytesPerSecond</span>,</span><br><span class="line">      <span class="attr">total</span>: progress.<span class="property">total</span>,</span><br><span class="line">      <span class="attr">transferred</span>: progress.<span class="property">transferred</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 下载完成</span></span><br><span class="line">  autoUpdater.<span class="title function_">on</span>(<span class="string">&quot;update-downloaded&quot;</span>, <span class="function">(<span class="params">info</span>) =&gt;</span> &#123;</span><br><span class="line">    log.<span class="title function_">info</span>(<span class="string">&quot;更新下载完成：&quot;</span>, info.<span class="property">version</span>);</span><br><span class="line">    <span class="comment">// 通知渲染进程&quot;下载完了，是否立即安装？&quot;</span></span><br><span class="line">    mainWindow?.<span class="property">webContents</span>.<span class="title function_">send</span>(<span class="string">&quot;update-downloaded&quot;</span>, &#123;</span><br><span class="line">      <span class="attr">version</span>: info.<span class="property">version</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====== 在 app.whenReady() 里调用 ======</span></span><br><span class="line">app.<span class="title function_">whenReady</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">createWindow</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 等窗口加载完再检查更新（不然 mainWindow 可能还是 null）</span></span><br><span class="line">  mainWindow?.<span class="property">webContents</span>.<span class="title function_">on</span>(<span class="string">&quot;did-finish-load&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 生产环境才检查更新，开发环境不检查</span></span><br><span class="line">    <span class="keyword">if</span> (!is.<span class="property">dev</span>) &#123;</span><br><span class="line">      <span class="title function_">setupAutoUpdater</span>();</span><br><span class="line">      autoUpdater.<span class="title function_">checkForUpdates</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====== 监听渲染进程的&quot;开始下载&quot;指令 ======</span></span><br><span class="line">ipcMain.<span class="title function_">on</span>(<span class="string">&quot;start-download&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  autoUpdater.<span class="title function_">downloadUpdate</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====== 监听渲染进程的&quot;立即安装&quot;指令 ======</span></span><br><span class="line">ipcMain.<span class="title function_">on</span>(<span class="string">&quot;install-update&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// quitAndInstall 会退出应用并启动安装程序</span></span><br><span class="line">  autoUpdater.<span class="title function_">quitAndInstall</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====== 监听渲染进程的&quot;手动检查更新&quot;指令 ======</span></span><br><span class="line">ipcMain.<span class="title function_">on</span>(<span class="string">&quot;check-for-update&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  autoUpdater.<span class="title function_">checkForUpdates</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-渲染进程（Vue-页面）怎么配合显示更新-UI"><a href="#2-5-渲染进程（Vue-页面）怎么配合显示更新-UI" class="headerlink" title="2.5 渲染进程（Vue 页面）怎么配合显示更新 UI"></a>2.5 渲染进程（Vue 页面）怎么配合显示更新 UI</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- src/renderer/src/components/UpdateDialog.vue --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;el-dialog</span><br><span class="line">    v-model=&quot;showUpdateDialog&quot;</span><br><span class="line">    title=&quot;发现新版本&quot;</span><br><span class="line">    :close-on-click-modal=&quot;false&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;</span><br><span class="line">        新版本号：&lt;strong&gt;&#123;&#123; newVersion &#125;&#125;&lt;/strong&gt;</span><br><span class="line">      &lt;/p&gt;</span><br><span class="line">      &lt;p&gt;当前版本：&#123;&#123; currentVersion &#125;&#125;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">      &lt;!-- 下载进度条 --&gt;</span><br><span class="line">      &lt;el-progress</span><br><span class="line">        v-if=&quot;isDownloading&quot;</span><br><span class="line">        :percentage=&quot;downloadPercent&quot;</span><br><span class="line">        :status=&quot;downloadPercent === 100 ? &#x27;success&#x27; : &#x27;&#x27;&quot;</span><br><span class="line">      /&gt;</span><br><span class="line"></span><br><span class="line">      &lt;!-- 更新说明 --&gt;</span><br><span class="line">      &lt;div v-if=&quot;releaseNotes&quot; class=&quot;release-notes&quot;&gt;</span><br><span class="line">        &lt;h4&gt;更新内容：&lt;/h4&gt;</span><br><span class="line">        &lt;p v-html=&quot;releaseNotes&quot;&gt;&lt;/p&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;template #footer&gt;</span><br><span class="line">      &lt;!-- 还没开始下载 --&gt;</span><br><span class="line">      &lt;el-button</span><br><span class="line">        v-if=&quot;!isDownloading &amp;&amp; !downloadComplete&quot;</span><br><span class="line">        type=&quot;primary&quot;</span><br><span class="line">        @click=&quot;startDownload&quot;</span><br><span class="line">      &gt;</span><br><span class="line">        立即更新</span><br><span class="line">      &lt;/el-button&gt;</span><br><span class="line">      &lt;!-- 下载中 --&gt;</span><br><span class="line">      &lt;el-button v-if=&quot;isDownloading&quot; disabled&gt;</span><br><span class="line">        下载中... &#123;&#123; downloadPercent &#125;&#125;%</span><br><span class="line">      &lt;/el-button&gt;</span><br><span class="line">      &lt;!-- 下载完成，等待用户确认安装 --&gt;</span><br><span class="line">      &lt;el-button v-if=&quot;downloadComplete&quot; type=&quot;primary&quot; @click=&quot;installUpdate&quot;&gt;</span><br><span class="line">        安装并重启</span><br><span class="line">      &lt;/el-button&gt;</span><br><span class="line">      &lt;el-button @click=&quot;showUpdateDialog = false&quot;&gt;稍后再说&lt;/el-button&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">  &lt;/el-dialog&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref, onMounted &#125; from &quot;vue&quot;;</span><br><span class="line"></span><br><span class="line">const showUpdateDialog = ref(false);</span><br><span class="line">const newVersion = ref(&quot;&quot;);</span><br><span class="line">const currentVersion = ref(&quot;&quot;);</span><br><span class="line">const releaseNotes = ref(&quot;&quot;);</span><br><span class="line">const isDownloading = ref(false);</span><br><span class="line">const downloadPercent = ref(0);</span><br><span class="line">const downloadComplete = ref(false);</span><br><span class="line"></span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  // 获取当前版本号</span><br><span class="line">  window.api.invoke(&quot;get-app-version&quot;).then((version: string) =&gt; &#123;</span><br><span class="line">    currentVersion.value = version;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  // 监听到有新版本</span><br><span class="line">  window.api.on(&quot;update-available&quot;, (info) =&gt; &#123;</span><br><span class="line">    newVersion.value = info.version;</span><br><span class="line">    releaseNotes.value = info.releaseNotes || &quot;&quot;;</span><br><span class="line">    showUpdateDialog.value = true;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  // 监听下载进度</span><br><span class="line">  window.api.on(&quot;download-progress&quot;, (progress) =&gt; &#123;</span><br><span class="line">    isDownloading.value = true;</span><br><span class="line">    downloadPercent.value = progress.percent;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  // 监听下载完成</span><br><span class="line">  window.api.on(&quot;update-downloaded&quot;, () =&gt; &#123;</span><br><span class="line">    isDownloading.value = false;</span><br><span class="line">    downloadComplete.value = true;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  // 监听没有更新</span><br><span class="line">  window.api.on(&quot;update-not-available&quot;, () =&gt; &#123;</span><br><span class="line">    // 可以在这里弹个&quot;已是最新版本&quot;的提示</span><br><span class="line">    console.log(&quot;当前已是最新版本&quot;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  // 监听更新出错</span><br><span class="line">  window.api.on(&quot;update-error&quot;, (errorMsg) =&gt; &#123;</span><br><span class="line">    console.error(&quot;更新出错：&quot;, errorMsg);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 开始下载</span><br><span class="line">function startDownload() &#123;</span><br><span class="line">  isDownloading.value = true;</span><br><span class="line">  window.api.send(&quot;start-download&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 安装更新</span><br><span class="line">function installUpdate() &#123;</span><br><span class="line">  window.api.send(&quot;install-update&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-主进程加一个获取版本号的-handler"><a href="#2-6-主进程加一个获取版本号的-handler" class="headerlink" title="2.6 主进程加一个获取版本号的 handler"></a>2.6 主进程加一个获取版本号的 handler</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主进程</span></span><br><span class="line">ipcMain.<span class="title function_">handle</span>(<span class="string">&quot;get-app-version&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> app.<span class="title function_">getVersion</span>(); <span class="comment">// 返回 package.json 里的 version 字段</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="NSIS-安装包目录配置——让用户装到你想让他装的地方"><a href="#NSIS-安装包目录配置——让用户装到你想让他装的地方" class="headerlink" title="NSIS 安装包目录配置——让用户装到你想让他装的地方"></a>NSIS 安装包目录配置——让用户装到你想让他装的地方</h2><h3 id="先搞懂默认行为"><a href="#先搞懂默认行为" class="headerlink" title="先搞懂默认行为"></a>先搞懂默认行为</h3><p>你打包出来的 <code>.exe</code> 安装包，默认行为是这样的：</p>
+<ul>
+<li><strong>默认安装位置：</strong> <code>C:\Users\用户名\AppData\Local\Programs\my-app\</code></li>
+<li>文件夹名叫 <code>my-app</code>，是因为你 <code>electron-builder.yml</code> 里 <code>win.executableName</code> 写的是 <code>my-app</code></li>
+<li>默认装到 C 盘的用户目录下（不是 Program Files）</li>
+<li>因为 <code>perMachine: false</code>，所以是”当前用户安装”，不需要管理员权限</li>
+</ul>
+<blockquote>
+<p><strong>大白话解释：</strong></p>
+<ul>
+<li><code>perMachine: false</code> → 只给当前登录的用户装，装在 <code>AppData\Local\Programs</code> 下，不用管理员权限</li>
+<li><code>perMachine: true</code> → 给这台电脑的所有用户装，装在 <code>C:\Program Files</code> 下，需要管理员权限</li>
+</ul>
+</blockquote>
+<h3 id="改安装文件夹的名字（不叫-my-app）"><a href="#改安装文件夹的名字（不叫-my-app）" class="headerlink" title="改安装文件夹的名字（不叫 my-app）"></a>改安装文件夹的名字（不叫 my-app）</h3><p>你觉得 <code>my-app</code> 这个名字太丑了，想改成”智能课堂”或者”ketang”，需要改两个地方：</p>
+<p><strong>第一步：改 <code>electron-builder.yml</code> 的 <code>executableName</code></strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># electron-builder.yml</span></span><br><span class="line"><span class="attr">win:</span></span><br><span class="line">  <span class="attr">executableName:</span> <span class="string">ketang</span> <span class="comment"># ← 改这里！原来写的是 my-app</span></span><br><span class="line">  <span class="attr">icon:</span> <span class="string">resources/icons/icon.ico</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个 <code>executableName</code> 决定了：</p>
+<ol>
+<li>打包出来的 exe 文件叫什么（<code>ketang.exe</code>）</li>
+<li>默认安装文件夹叫什么（<code>AppData\Local\Programs\ketang\</code>）</li>
+</ol>
+</blockquote>
+<p><strong>第二步：同步修改 <code>installer.nsh</code> 里所有引用 exe 名字的地方</strong></p>
+<p>因为你的项目有个 <code>installer.nsh</code> 自定义安装脚本，里面写死了 <code>my-app.exe</code>，改了名字必须同步：</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">; installer.nsh</span></span><br><span class="line"><span class="keyword">!macro</span> customInstall</span><br><span class="line">  <span class="keyword">WriteRegStr</span> <span class="params">HKCU</span> <span class="string">&quot;Software\Classes\ketang-clients&quot;</span> <span class="string">&quot;&quot;</span> <span class="string">&quot;智能课堂系统字幕客户端&quot;</span></span><br><span class="line">  <span class="keyword">WriteRegStr</span> <span class="params">HKCU</span> <span class="string">&quot;Software\Classes\ketang-clients&quot;</span> <span class="string">&quot;URL Protocol&quot;</span> <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="keyword">WriteRegStr</span> <span class="params">HKCU</span> <span class="string">&quot;Software\Classes\ketang-clients\DefaultIcon&quot;</span> <span class="string">&quot;&quot;</span> <span class="string">&quot;<span class="variable constant_">$INSTDIR</span>\\ketang.exe,1&quot;</span></span><br><span class="line">  <span class="keyword">WriteRegStr</span> <span class="params">HKCU</span> <span class="string">&quot;Software\Classes\ketang-clients\shell\open\command&quot;</span> <span class="string">&quot;&quot;</span> <span class="string">&#x27;&quot;<span class="variable constant_">$INSTDIR</span>\\ketang.exe&quot; &quot;%1&quot;&#x27;</span></span><br><span class="line">  <span class="comment">; ... 其他行也要把 my-app.exe 改成 ketang.exe</span></span><br><span class="line"><span class="keyword">!macro</span>end</span><br><span class="line"></span><br><span class="line"><span class="keyword">!macro</span> customUnInstall</span><br><span class="line">  <span class="title function_">nsExec::ExecToLog</span> <span class="string">&#x27;taskkill /f /im &quot;ketang.exe&quot;&#x27;</span></span><br><span class="line">  <span class="comment">; ... 其他行也要把 my-app.exe 改成 ketang.exe</span></span><br><span class="line"><span class="keyword">!macro</span>end</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>踩坑提醒：</strong> 如果你只改了 <code>executableName</code> 没改 <code>installer.nsh</code>，安装的时候协议注册会指向一个不存在的 <code>my-app.exe</code>，导致协议唤起功能失效！</p>
+</blockquote>
+<h3 id="让用户自己选安装位置"><a href="#让用户自己选安装位置" class="headerlink" title="让用户自己选安装位置"></a>让用户自己选安装位置</h3><p>你的项目里已经配好了：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># electron-builder.yml</span></span><br><span class="line"><span class="attr">nsis:</span></span><br><span class="line">  <span class="attr">oneClick:</span> <span class="literal">false</span> <span class="comment"># 不是一键安装，会弹出安装向导</span></span><br><span class="line">  <span class="attr">allowToChangeInstallationDirectory:</span> <span class="literal">true</span> <span class="comment"># ← 允许用户自己选安装目录</span></span><br></pre></td></tr></table></figure>
+
+<p>这两个配置的效果是：用户双击安装包后，会弹出一个安装向导界面，里面有个”浏览”按钮，用户可以自己选择装到 C 盘还是 D 盘还是哪里。</p>
+<blockquote>
+<p><strong>大白话解释：</strong></p>
+<ul>
+<li><code>oneClick: false</code> → 如果设成 true，用户双击安装包就直接装了，啥都看不到，也没法选位置</li>
+<li><code>allowToChangeInstallationDirectory: true</code> → 安装向导里会出现”安装位置”那一步，用户可以改路径</li>
+</ul>
+</blockquote>
+<h3 id="设置默认安装到-D-盘（或其他盘）"><a href="#设置默认安装到-D-盘（或其他盘）" class="headerlink" title="设置默认安装到 D 盘（或其他盘）"></a>设置默认安装到 D 盘（或其他盘）</h3><p>如果你想让用户打开安装包的时候，默认路径就是 <code>D:\智能课堂\</code>，而不是 C 盘，那需要在 <code>installer.nsh</code> 里加一段 NSIS 脚本：</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">; installer.nsh 顶部添加</span></span><br><span class="line"><span class="keyword">!macro</span> customInit</span><br><span class="line">  <span class="comment">; 检查 D 盘是否存在，存在就默认装到 D 盘</span></span><br><span class="line">  <span class="keyword">IfFileExists</span> <span class="string">&quot;D:\*&quot;</span> <span class="number">0</span> +<span class="number">3</span></span><br><span class="line">    <span class="keyword">StrCpy</span> <span class="variable">$INSTDIR</span> <span class="string">&quot;D:\智能课堂系统字幕客户端&quot;</span></span><br><span class="line">    <span class="keyword">Goto</span> done</span><br><span class="line">  <span class="comment">; D 盘不存在，检查 E 盘</span></span><br><span class="line">  <span class="keyword">IfFileExists</span> <span class="string">&quot;E:\*&quot;</span> <span class="number">0</span> +<span class="number">3</span></span><br><span class="line">    <span class="keyword">StrCpy</span> <span class="variable">$INSTDIR</span> <span class="string">&quot;E:\智能课堂系统字幕客户端&quot;</span></span><br><span class="line">    <span class="keyword">Goto</span> done</span><br><span class="line">  <span class="comment">; 都没有，就用默认的 C 盘路径</span></span><br><span class="line">  done:</span><br><span class="line"><span class="keyword">!macro</span>end</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>大白话解释：</strong></p>
+<ul>
+<li><code>customInit</code> 这个宏在安装界面显示之前执行</li>
+<li><code>$INSTDIR</code> 就是”默认安装路径”这个变量，你改它就等于改了默认路径</li>
+<li>上面这段逻辑是：优先装 D 盘 → D 盘没有就装 E 盘 → 都没有就装 C 盘</li>
+<li><code>IfFileExists &quot;D:\*&quot; 0 +3</code> → 检查 D 盘是否存在，不存在就跳过下面 3 行</li>
+</ul>
+</blockquote>
+<h3 id="强制安装到固定位置（不让用户改）"><a href="#强制安装到固定位置（不让用户改）" class="headerlink" title="强制安装到固定位置（不让用户改）"></a>强制安装到固定位置（不让用户改）</h3><p>有些场景你希望强制装到某个目录，不给用户选择的机会：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># electron-builder.yml</span></span><br><span class="line"><span class="attr">nsis:</span></span><br><span class="line">  <span class="attr">oneClick:</span> <span class="literal">true</span> <span class="comment"># 一键安装，不弹出向导</span></span><br><span class="line">  <span class="attr">allowToChangeInstallationDirectory:</span> <span class="literal">false</span> <span class="comment"># 不让用户改路径</span></span><br><span class="line">  <span class="attr">perMachine:</span> <span class="literal">true</span> <span class="comment"># 装到 Program Files（需要管理员权限）</span></span><br></pre></td></tr></table></figure>
+
+<p>或者用 <code>installer.nsh</code> 强制指定路径（用户连改的机会都没有）：</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">!macro</span> customInit</span><br><span class="line">  <span class="keyword">StrCpy</span> <span class="variable">$INSTDIR</span> <span class="string">&quot;D:\智能课堂&quot;</span></span><br><span class="line"><span class="keyword">!macro</span>end</span><br></pre></td></tr></table></figure>
+
+<h3 id="perMachine-的区别（影响安装位置）"><a href="#perMachine-的区别（影响安装位置）" class="headerlink" title="perMachine 的区别（影响安装位置）"></a>perMachine 的区别（影响安装位置）</h3><table>
+<thead>
+<tr>
+<th>配置</th>
+<th>默认安装路径</th>
+<th>需要管理员权限</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>perMachine: false</code></td>
+<td><code>C:\Users\用户名\AppData\Local\Programs\应用名\</code></td>
+<td>❌ 不需要</td>
+<td>普通用户软件（推荐）</td>
+</tr>
+<tr>
+<td><code>perMachine: true</code></td>
+<td><code>C:\Program Files\应用名\</code></td>
+<td>✅ 需要</td>
+<td>系统级软件、需要所有用户共享</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>建议：</strong> 一般用 <code>perMachine: false</code>，因为不需要管理员权限，用户装起来更顺畅，也不会被杀毒软件拦截。</p>
+</blockquote>
+<h3 id="完整的-electron-builder-yml-NSIS-配置（直接抄）"><a href="#完整的-electron-builder-yml-NSIS-配置（直接抄）" class="headerlink" title="完整的 electron-builder.yml NSIS 配置（直接抄）"></a>完整的 electron-builder.yml NSIS 配置（直接抄）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># electron-builder.yml</span></span><br><span class="line"><span class="attr">win:</span></span><br><span class="line">  <span class="attr">executableName:</span> <span class="string">ketang</span> <span class="comment"># exe 文件名 + 默认安装文件夹名</span></span><br><span class="line">  <span class="attr">icon:</span> <span class="string">resources/icons/icon.ico</span></span><br><span class="line">  <span class="attr">target:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">target:</span> <span class="string">nsis</span></span><br><span class="line">      <span class="attr">arch:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">x64</span> <span class="comment"># 只打 64 位包</span></span><br><span class="line">  <span class="attr">requestedExecutionLevel:</span> <span class="string">asInvoker</span> <span class="comment"># 不请求管理员权限</span></span><br><span class="line"></span><br><span class="line"><span class="attr">nsis:</span></span><br><span class="line">  <span class="attr">include:</span> <span class="string">installer.nsh</span> <span class="comment"># 自定义安装脚本</span></span><br><span class="line">  <span class="attr">artifactName:</span> <span class="string">智能课堂系统字幕客户端.$&#123;ext&#125;</span> <span class="comment"># 打包出来的安装包文件名</span></span><br><span class="line">  <span class="attr">shortcutName:</span> <span class="string">智能课堂系统字幕客户端</span> <span class="comment"># 桌面快捷方式显示的名字</span></span><br><span class="line">  <span class="attr">uninstallDisplayName:</span> <span class="string">卸载智能课堂系统字幕客户端</span> <span class="comment"># 控制面板里显示的名字</span></span><br><span class="line">  <span class="attr">createDesktopShortcut:</span> <span class="literal">true</span> <span class="comment"># 创建桌面快捷方式</span></span><br><span class="line">  <span class="attr">createStartMenuShortcut:</span> <span class="literal">true</span> <span class="comment"># 创建开始菜单快捷方式</span></span><br><span class="line">  <span class="attr">oneClick:</span> <span class="literal">false</span> <span class="comment"># 不是一键安装，弹出向导</span></span><br><span class="line">  <span class="attr">allowToChangeInstallationDirectory:</span> <span class="literal">true</span> <span class="comment"># 允许用户选安装位置</span></span><br><span class="line">  <span class="attr">installerIcon:</span> <span class="string">resources/icons/icon.ico</span> <span class="comment"># 安装程序的图标</span></span><br><span class="line">  <span class="attr">uninstallerIcon:</span> <span class="string">resources/icons/icon.ico</span> <span class="comment"># 卸载程序的图标</span></span><br><span class="line">  <span class="attr">installerHeaderIcon:</span> <span class="string">resources/icons/icon.ico</span> <span class="comment"># 安装向导标题栏图标</span></span><br><span class="line">  <span class="attr">perMachine:</span> <span class="literal">false</span> <span class="comment"># 当前用户安装，不需要管理员权限</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-8-安装路径相关的几个变量"><a href="#5-8-安装路径相关的几个变量" class="headerlink" title="5.8 安装路径相关的几个变量"></a>5.8 安装路径相关的几个变量</h3><p>在 <code>installer.nsh</code> 里可以用这些变量：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$INSTDIR</code></td>
+<td>用户选择的安装目录</td>
+<td><code>D:\智能课堂</code></td>
+</tr>
+<tr>
+<td><code>$PROGRAMFILES</code></td>
+<td>Program Files 目录</td>
+<td><code>C:\Program Files</code></td>
+</tr>
+<tr>
+<td><code>$PROGRAMFILES64</code></td>
+<td>64位 Program Files</td>
+<td><code>C:\Program Files</code></td>
+</tr>
+<tr>
+<td><code>$LOCALAPPDATA</code></td>
+<td>用户本地数据目录</td>
+<td><code>C:\Users\lij\AppData\Local</code></td>
+</tr>
+<tr>
+<td><code>$APPDATA</code></td>
+<td>用户漫游数据目录</td>
+<td><code>C:\Users\lij\AppData\Roaming</code></td>
+</tr>
+<tr>
+<td><code>$DESKTOP</code></td>
+<td>桌面路径</td>
+<td><code>C:\Users\lij\Desktop</code></td>
+</tr>
+<tr>
+<td><code>$SMPROGRAMS</code></td>
+<td>开始菜单程序目录</td>
+<td><code>C:\Users\lij\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</code></td>
+</tr>
+</tbody></table>
+<h3 id="5-9-卸载时自动关闭正在运行的程序"><a href="#5-9-卸载时自动关闭正在运行的程序" class="headerlink" title="5.9 卸载时自动关闭正在运行的程序"></a>5.9 卸载时自动关闭正在运行的程序</h3><p>你的 <code>installer.nsh</code> 里已经有这段了，但这里解释一下为什么要加：</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">!macro</span> customUnInstall</span><br><span class="line">  <span class="comment">; 卸载前先强制关掉正在运行的程序，不然文件被占用删不掉</span></span><br><span class="line">  <span class="title function_">nsExec::ExecToLog</span> <span class="string">&#x27;taskkill /f /im &quot;my-app.exe&quot;&#x27;</span></span><br><span class="line"><span class="keyword">!macro</span>end</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>踩坑提醒：</strong> 如果不加这个，用户在程序还开着的时候点卸载，会提示”文件被占用”，卸载失败，体验很差。</p>
+</blockquote>
+<hr>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <a class="article-action article-action--prev" href="/2026/08/04/electron/electron-api-reference/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">Electron基础示例</span>
+      </a>
+    
+    
+      <a class="article-action article-action--next" href="/2026/07/31/uni-app/vsc%E7%BC%96%E8%BE%91%E5%B0%8F%E7%A8%8B%E5%BA%8F/">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">uni-app基础篇</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/2026/08/04/electron/electron-api-reference/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/camera.webp" alt="" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">Electron基础示例</strong>
+            <em class="related-card__date">2026-08-04</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/2026/07/27/electron/web%E7%AB%AF%E5%94%A4%E9%86%92%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/mountain.webp" alt="" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">web端唤醒桌面应用配置</strong>
+            <em class="related-card__date">2026-07-27</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Jie</span>
+  
+    <span class="site-footer__right">
+      
+        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+      
+    </span>
+  
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","guestbook.label":"留言板","guestbook.title":"留言板","guestbook.loading":"正在铺开留言墙…","guestbook.missing_config":"留言墙需要评论系统：请在主题配置中设置 comments: twikoo（并填写 envId）或 comments: artalk（并填写 server）。","guestbook.load_failed":"留言加载失败，请稍后再试。","guestbook.empty":"墙上还空着，来贴第一张留言吧！","guestbook.load_more":"展开更多留言","guestbook.total_count":"共 %d 条留言","guestbook.latest_note":"墙上展示最新 %d 条","guestbook.jump_to_comment":"查看留言","guestbook.sort_time":"查看最新","guestbook.sort_random":"随机排序","guestbook.anonymous":"匿名访客","guestbook.write_hint":"在下方留言，刷新后就会贴到墙上","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+  <script id="__bs_script__">//<![CDATA[document.write("<script async src='http://HOST:3001/browser-sync/browser-sync-client.js'><\/script>".replace("HOST", location.hostname));//]]></script>
+  
+</body>
+</html>

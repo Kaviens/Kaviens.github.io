@@ -1,0 +1,947 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
+
+<title>Electron基础示例 | 大前端博客</title>
+<meta name="description" content="Electron API 参考文档本文档详细介绍了项目中使用的所有Electron API，包括其功能、参数、返回值和使用示例。 📋 目录 BrowserWindow API new BrowserWindow(options) 窗口操作方法 Screen API App API IpcMain API Tray API Menu API Dialog A...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Electron基础示例 | 大前端博客">
+<meta property="og:url" content="http://example.com/2026/08/04/electron/electron-api-reference/">
+<meta property="og:site_name" content="大前端博客">
+<meta property="og:description" content="Electron API 参考文档本文档详细介绍了项目中使用的所有Electron API，包括其功能、参数、返回值和使用示例。 📋 目录 BrowserWindow API new BrowserWindow(options) 窗口操作方法 Screen API App API IpcMain API Tray API Menu API Dialog A...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-04T02:26:17.025Z">
+<meta property="article:modified_time" content="2026-08-04T02:26:46.394Z">
+<meta property="article:author" content="Jie">
+<meta property="article:tag" content="electron">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="http://example.com/2026/08/04/electron/electron-api-reference/">
+
+<link rel="icon" href="/images/favicon.png" type="image/png">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Electron基础示例","name":"Electron基础示例 | 大前端博客","description":"Electron API 参考文档本文档详细介绍了项目中使用的所有Electron API，包括其功能、参数、返回值和使用示例。 📋 目录 BrowserWindow API new BrowserWindow(options) 窗口操作方法 Screen API App API IpcMain API Tray API Menu API Dialog A...","url":"http://example.com/2026/08/04/electron/electron-api-reference/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"大前端博客","url":"http://example.com/"},"mainEntityOfPage":"http://example.com/2026/08/04/electron/electron-api-reference/","datePublished":"2026-08-04T02:26:17.025Z","dateModified":"2026-08-04T02:26:46.394Z","author":{"@type":"Person","name":"Jie"},"publisher":{"@type":"Organization","name":"大前端博客"},"keywords":"electron"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'green';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'green';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body
+  class="is-post tag-style-tape bg-style-default"
+  data-default-accent="green"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="circle"
+  data-strong-accent="on"
+>
+  
+    <div class="page-grain"></div>
+  
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-menu"></use></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <a class="brand-mark" href="/" aria-label="FlatPaper 首页">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-layout-grid"></use></svg>
+
+        </a>
+      
+    </div>
+    <a class="brand-text" href="/">大前端博客</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/about">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/about/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-user"></use></svg>
+
+          <span>关于</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                <span>标签</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                <span>归档</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-palette"></use></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-sun"></use></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-moon"></use></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/about">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <a class="" href="/about/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-user"></use></svg>
+
+            <span>关于</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                  <span>标签</span>
+                </a>
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                  <span>归档</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar" aria-hidden="true">
+        <span></span><i></i><em></em><b></b>
+      </div>
+    
+    <h3>Jie</h3>
+    <p class="profile-role">日常记录</p>
+    <p>天行健，君子以自强不息。</p>
+    
+    <div class="socials">
+      
+      
+        
+        
+        <a href="/atom.xml" aria-label="RSS feed" data-tooltip="RSS feed">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-rss"></use></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8B-%E7%9B%AE%E5%BD%95"><span class="toc-text">📋 目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%AA%9F-BrowserWindow-API"><span class="toc-text">🪟 BrowserWindow API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-new-BrowserWindow-options"><span class="toc-text">0. new BrowserWindow(options)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-mainWindow-getBounds"><span class="toc-text">1. mainWindow.getBounds()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-mainWindow-setBounds-options"><span class="toc-text">2. mainWindow.setBounds(options)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-mainWindow-getPosition"><span class="toc-text">3. mainWindow.getPosition()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-mainWindow-show"><span class="toc-text">4. mainWindow.show()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-mainWindow-hide"><span class="toc-text">5. mainWindow.hide()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-mainWindow-close"><span class="toc-text">6. mainWindow.close()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-mainWindow-focus"><span class="toc-text">7. mainWindow.focus()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-mainWindow-reload"><span class="toc-text">8. mainWindow.reload()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-mainWindow-isVisible"><span class="toc-text">9. mainWindow.isVisible()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-mainWindow-isMinimized"><span class="toc-text">10. mainWindow.isMinimized()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-mainWindow-restore"><span class="toc-text">11. mainWindow.restore()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-mainWindow-setMovable-boolean"><span class="toc-text">12. mainWindow.setMovable(boolean)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-mainWindow-setResizable-boolean"><span class="toc-text">13. mainWindow.setResizable(boolean)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-mainWindow-setFullScreen-boolean"><span class="toc-text">14. mainWindow.setFullScreen(boolean)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-mainWindow-loadURL-url"><span class="toc-text">15. mainWindow.loadURL(url)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-mainWindow-loadFile-path"><span class="toc-text">16. mainWindow.loadFile(path)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-mainWindow-webContents"><span class="toc-text">17. mainWindow.webContents</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%96%A5%EF%B8%8F-Screen-API"><span class="toc-text">🖥️ Screen API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-screen-getPrimaryDisplay"><span class="toc-text">1. screen.getPrimaryDisplay()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-screen-getAllDisplays"><span class="toc-text">2. screen.getAllDisplays()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-screen-getDisplayNearestPoint-point"><span class="toc-text">3. screen.getDisplayNearestPoint(point)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-screen-getCursorScreenPoint"><span class="toc-text">4. screen.getCursorScreenPoint()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9A%80-App-API"><span class="toc-text">🚀 App API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-app-whenReady"><span class="toc-text">1. app.whenReady()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-app-quit"><span class="toc-text">2. app.quit()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-app-on-event-listener"><span class="toc-text">3. app.on(event, listener)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-app-getAppPath"><span class="toc-text">4. app.getAppPath()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-app-setAsDefaultProtocolClient-protocol"><span class="toc-text">5. app.setAsDefaultProtocolClient(protocol)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-app-requestSingleInstanceLock"><span class="toc-text">6. app.requestSingleInstanceLock()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%A1-IpcMain-API"><span class="toc-text">📡 IpcMain API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ipcMain-on-channel-listener"><span class="toc-text">1. ipcMain.on(channel, listener)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-ipcMain-handle-channel-listener"><span class="toc-text">2. ipcMain.handle(channel, listener)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%97%82%EF%B8%8F-Tray-API"><span class="toc-text">🗂️ Tray API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-new-Tray-iconPath"><span class="toc-text">1. new Tray(iconPath)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-tray-setContextMenu-menu"><span class="toc-text">2. tray.setContextMenu(menu)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-tray-destroy"><span class="toc-text">3. tray.destroy()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8B-Menu-API"><span class="toc-text">📋 Menu API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Menu-buildFromTemplate-template"><span class="toc-text">1. Menu.buildFromTemplate(template)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-MenuItemConstructorOptions"><span class="toc-text">2. MenuItemConstructorOptions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%AC-Dialog-API"><span class="toc-text">💬 Dialog API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-dialog-showMessageBox-options"><span class="toc-text">1. dialog.showMessageBox(options)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%A7-%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC-API"><span class="toc-text">🎧 事件监听 API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BrowserWindow-%E4%BA%8B%E4%BB%B6"><span class="toc-text">BrowserWindow 事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebContents-%E4%BA%8B%E4%BB%B6"><span class="toc-text">WebContents 事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%A7-%E5%9D%90%E6%A0%87%E7%B3%BB%E7%BB%9F%E8%AF%B4%E6%98%8E"><span class="toc-text">🔧 坐标系统说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%8F%E5%B9%95%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="toc-text">屏幕坐标系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AA%97%E5%8F%A3%E5%9D%90%E6%A0%87%E8%AE%A1%E7%AE%97"><span class="toc-text">窗口坐标计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%B1%8F%E5%B9%95%E7%8E%AF%E5%A2%83"><span class="toc-text">多屏幕环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%9D-%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE"><span class="toc-text">📝 使用建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%97-%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="toc-text">🔗 相关链接</span></a></li></ol>
+          
+        </div>
+      </section>
+      
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper">
+  
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/electron/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+        electron
+      </a>
+    
+    <h1>Electron基础示例</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-08-04</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/electron/">#electron</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <h1 id="Electron-API-参考文档"><a href="#Electron-API-参考文档" class="headerlink" title="Electron API 参考文档"></a>Electron API 参考文档</h1><p>本文档详细介绍了项目中使用的所有Electron API，包括其功能、参数、返回值和使用示例。</p>
+<h2 id="📋-目录"><a href="#📋-目录" class="headerlink" title="📋 目录"></a>📋 目录</h2><ol>
+<li><a href="#browserwindow-api">BrowserWindow API</a><ul>
+<li><a href="#0-new-browserwindowoptions">new BrowserWindow(options)</a></li>
+<li><a href="#browserwindow-%E6%96%B9%E6%B3%95">窗口操作方法</a></li>
+</ul>
+</li>
+<li><a href="#screen-api">Screen API</a></li>
+<li><a href="#app-api">App API</a></li>
+<li><a href="#ipcmain-api">IpcMain API</a></li>
+<li><a href="#tray-api">Tray API</a></li>
+<li><a href="#menu-api">Menu API</a></li>
+<li><a href="#dialog-api">Dialog API</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC-api">事件监听 API</a></li>
+</ol>
+<hr>
+<h2 id="🪟-BrowserWindow-API"><a href="#🪟-BrowserWindow-API" class="headerlink" title="🪟 BrowserWindow API"></a>🪟 BrowserWindow API</h2><h3 id="0-new-BrowserWindow-options"><a href="#0-new-BrowserWindow-options" class="headerlink" title="0. new BrowserWindow(options)"></a>0. <code>new BrowserWindow(options)</code></h3><p><strong>功能</strong>: 创建新的浏览器窗口</p>
+<p><strong>参数</strong>: <code>BrowserWindowConstructorOptions</code> - 窗口配置选项</p>
+<p><strong>常用属性详解</strong>:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">BrowserWindow</span>(&#123;</span><br><span class="line">  <span class="comment">// 窗口尺寸</span></span><br><span class="line">  <span class="attr">width</span>: <span class="built_in">number</span>,           <span class="comment">// 窗口宽度（像素）</span></span><br><span class="line">  <span class="attr">height</span>: <span class="built_in">number</span>,          <span class="comment">// 窗口高度（像素）</span></span><br><span class="line">  <span class="attr">minWidth</span>?: <span class="built_in">number</span>,       <span class="comment">// 最小宽度</span></span><br><span class="line">  <span class="attr">minHeight</span>?: <span class="built_in">number</span>,      <span class="comment">// 最小高度</span></span><br><span class="line">  <span class="attr">maxWidth</span>?: <span class="built_in">number</span>,       <span class="comment">// 最大宽度</span></span><br><span class="line">  <span class="attr">maxHeight</span>?: <span class="built_in">number</span>,      <span class="comment">// 最大高度</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 窗口位置</span></span><br><span class="line">  <span class="attr">x</span>?: <span class="built_in">number</span>,              <span class="comment">// 窗口左上角X坐标</span></span><br><span class="line">  <span class="attr">y</span>?: <span class="built_in">number</span>,              <span class="comment">// 窗口左上角Y坐标</span></span><br><span class="line">  <span class="attr">center</span>?: <span class="built_in">boolean</span>,        <span class="comment">// 是否居中显示</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 窗口显示</span></span><br><span class="line">  <span class="attr">show</span>?: <span class="built_in">boolean</span>,          <span class="comment">// 是否立即显示（默认true）</span></span><br><span class="line">  <span class="attr">title</span>?: <span class="built_in">string</span>,          <span class="comment">// 窗口标题</span></span><br><span class="line">  <span class="attr">icon</span>?: <span class="built_in">string</span> | <span class="title class_">NativeImage</span>, <span class="comment">// 窗口图标</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 窗口样式</span></span><br><span class="line">  <span class="attr">frame</span>?: <span class="built_in">boolean</span>,         <span class="comment">// 是否显示窗口边框（默认true）</span></span><br><span class="line">  <span class="attr">titleBarStyle</span>?: <span class="built_in">string</span>,  <span class="comment">// 标题栏样式（macOS）</span></span><br><span class="line">  <span class="attr">transparent</span>?: <span class="built_in">boolean</span>,   <span class="comment">// 是否透明（默认false）</span></span><br><span class="line">  <span class="attr">backgroundColor</span>?: <span class="built_in">string</span>, <span class="comment">// 背景颜色</span></span><br><span class="line">  <span class="attr">opacity</span>?: <span class="built_in">number</span>,        <span class="comment">// 窗口透明度（0.0-1.0）</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 窗口行为</span></span><br><span class="line">  <span class="attr">resizable</span>?: <span class="built_in">boolean</span>,     <span class="comment">// 是否可调整大小（默认true）</span></span><br><span class="line">  <span class="attr">movable</span>?: <span class="built_in">boolean</span>,       <span class="comment">// 是否可移动（默认true）</span></span><br><span class="line">  <span class="attr">minimizable</span>?: <span class="built_in">boolean</span>,   <span class="comment">// 是否可最小化（默认true）</span></span><br><span class="line">  <span class="attr">maximizable</span>?: <span class="built_in">boolean</span>,   <span class="comment">// 是否可最大化（默认true）</span></span><br><span class="line">  <span class="attr">closable</span>?: <span class="built_in">boolean</span>,      <span class="comment">// 是否可关闭（默认true）</span></span><br><span class="line">  <span class="attr">alwaysOnTop</span>?: <span class="built_in">boolean</span>,   <span class="comment">// 是否始终置顶（默认false）</span></span><br><span class="line">  <span class="attr">skipTaskbar</span>?: <span class="built_in">boolean</span>,   <span class="comment">// 是否在任务栏显示（默认false）</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 全屏相关</span></span><br><span class="line">  <span class="attr">fullscreen</span>?: <span class="built_in">boolean</span>,    <span class="comment">// 是否全屏（默认false）</span></span><br><span class="line">  <span class="attr">fullscreenable</span>?: <span class="built_in">boolean</span>, <span class="comment">// 是否允许全屏（默认true）</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 窗口状态</span></span><br><span class="line">  <span class="attr">autoHideMenuBar</span>?: <span class="built_in">boolean</span>, <span class="comment">// 自动隐藏菜单栏（默认false）</span></span><br><span class="line">  <span class="attr">menuBarVisible</span>?: <span class="built_in">boolean</span>,  <span class="comment">// 菜单栏是否可见</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 安全设置</span></span><br><span class="line">  <span class="attr">webSecurity</span>?: <span class="built_in">boolean</span>,   <span class="comment">// 是否启用web安全（默认true）</span></span><br><span class="line">  <span class="attr">allowRunningInsecureContent</span>?: <span class="built_in">boolean</span>, <span class="comment">// 允许运行不安全内容</span></span><br><span class="line">  <span class="attr">experimentalFeatures</span>?: <span class="built_in">boolean</span>, <span class="comment">// 启用实验性功能</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 其他</span></span><br><span class="line">  <span class="attr">hasShadow</span>?: <span class="built_in">boolean</span>,     <span class="comment">// 是否显示窗口阴影（默认true）</span></span><br><span class="line">  <span class="attr">enableLargerThanScreen</span>?: <span class="built_in">boolean</span>, <span class="comment">// 允许窗口大于屏幕</span></span><br><span class="line">  <span class="attr">webPreferences</span>?: <span class="title class_">WebPreferences</span> <span class="comment">// Web内容偏好设置</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mainWindow = <span class="keyword">new</span> <span class="title class_">BrowserWindow</span>(&#123;</span><br><span class="line">  <span class="attr">width</span>: <span class="title class_">Math</span>.<span class="title function_">round</span>(width * <span class="number">0.9</span>), <span class="comment">// 宽度为屏幕的90%</span></span><br><span class="line">  <span class="attr">height</span>: <span class="number">100</span>, <span class="comment">// 初始高度100px</span></span><br><span class="line">  <span class="attr">show</span>: <span class="literal">false</span>, <span class="comment">// 先不显示</span></span><br><span class="line">  <span class="attr">frame</span>: <span class="literal">false</span>, <span class="comment">// 无边框窗口</span></span><br><span class="line">  <span class="attr">transparent</span>: <span class="literal">true</span>, <span class="comment">// 透明背景</span></span><br><span class="line">  <span class="attr">backgroundColor</span>: <span class="string">&#x27;#00000000&#x27;</span>, <span class="comment">// 透明背景色</span></span><br><span class="line">  <span class="attr">autoHideMenuBar</span>: <span class="literal">true</span>, <span class="comment">// 隐藏菜单栏</span></span><br><span class="line">  <span class="attr">fullscreen</span>: <span class="literal">false</span>, <span class="comment">// 非全屏</span></span><br><span class="line">  <span class="attr">skipTaskbar</span>: <span class="literal">true</span>, <span class="comment">// 不在任务栏显示</span></span><br><span class="line">  <span class="attr">alwaysOnTop</span>: <span class="literal">true</span>, <span class="comment">// 始终置顶</span></span><br><span class="line">  <span class="attr">hasShadow</span>: <span class="literal">false</span>, <span class="comment">// 禁用窗口阴影</span></span><br><span class="line">  <span class="attr">enableLargerThanScreen</span>: <span class="literal">false</span>, <span class="comment">// 禁止窗口大于屏幕</span></span><br><span class="line">  <span class="attr">movable</span>: <span class="literal">true</span>, <span class="comment">// 可移动</span></span><br><span class="line">  <span class="attr">resizable</span>: <span class="literal">false</span>, <span class="comment">// 不可调整大小</span></span><br><span class="line">  <span class="attr">webPreferences</span>: &#123;</span><br><span class="line">    <span class="attr">preload</span>: <span class="title function_">join</span>(__dirname, <span class="string">&#x27;../preload/index.js&#x27;</span>),</span><br><span class="line">    <span class="attr">sandbox</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">webSecurity</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">allowRunningInsecureContent</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">experimentalFeatures</span>: <span class="literal">true</span>，</span><br><span class="line">    <span class="attr">backgroundThrottling</span>: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>WebPreferences 详细配置</strong>:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">webPreferences</span>: &#123;</span><br><span class="line">  <span class="attr">preload</span>?: <span class="built_in">string</span>,                  <span class="comment">// 预加载脚本路径</span></span><br><span class="line">  <span class="attr">nodeIntegration</span>?: <span class="built_in">boolean</span>,         <span class="comment">// 是否启用Node.js集成</span></span><br><span class="line">  <span class="attr">contextIsolation</span>?: <span class="built_in">boolean</span>,        <span class="comment">// 是否启用上下文隔离</span></span><br><span class="line">  <span class="attr">sandbox</span>?: <span class="built_in">boolean</span>,                 <span class="comment">// 是否启用沙箱模式</span></span><br><span class="line">  <span class="attr">webSecurity</span>?: <span class="built_in">boolean</span>,             <span class="comment">// 是否启用web安全</span></span><br><span class="line">  <span class="attr">allowRunningInsecureContent</span>?: <span class="built_in">boolean</span>, <span class="comment">// 允许运行不安全内容</span></span><br><span class="line">  <span class="attr">experimentalFeatures</span>?: <span class="built_in">boolean</span>,    <span class="comment">// 启用实验性功能</span></span><br><span class="line">  <span class="attr">devTools</span>?: <span class="built_in">boolean</span>,                <span class="comment">// 是否显示开发者工具</span></span><br><span class="line">  <span class="attr">webgl</span>?: <span class="built_in">boolean</span>,                   <span class="comment">// 是否启用WebGL</span></span><br><span class="line">  <span class="attr">plugins</span>?: <span class="built_in">boolean</span>,                 <span class="comment">// 是否启用插件</span></span><br><span class="line">  <span class="attr">images</span>?: <span class="built_in">boolean</span>,                  <span class="comment">// 是否加载图片</span></span><br><span class="line">  <span class="attr">textAreasAreResizable</span>?: <span class="built_in">boolean</span>,   <span class="comment">// 文本区域是否可调整大小</span></span><br><span class="line">  <span class="attr">webgl2</span>?: <span class="built_in">boolean</span>,                  <span class="comment">// 是否启用WebGL2</span></span><br><span class="line">  <span class="attr">offscreen</span>?: <span class="built_in">boolean</span>,               <span class="comment">// 是否启用离屏渲染</span></span><br><span class="line">  <span class="attr">backgroundThrottling</span>?: <span class="built_in">boolean</span>,    <span class="comment">// 后台节流</span></span><br><span class="line">  <span class="attr">spellcheck</span>?: <span class="built_in">boolean</span>,              <span class="comment">// 拼写检查</span></span><br><span class="line">  <span class="attr">enableWebSQL</span>?: <span class="built_in">boolean</span>,            <span class="comment">// 启用WebSQL</span></span><br><span class="line">  <span class="attr">enableRemoteModule</span>?: <span class="built_in">boolean</span>,      <span class="comment">// 启用远程模块</span></span><br><span class="line">  <span class="attr">additionalArguments</span>?: <span class="built_in">string</span>[],    <span class="comment">// 额外的命令行参数</span></span><br><span class="line">  <span class="attr">safeDialogs</span>?: <span class="built_in">boolean</span>,             <span class="comment">// 安全对话框</span></span><br><span class="line">  <span class="attr">disableDialogs</span>?: <span class="built_in">boolean</span>,          <span class="comment">// 禁用对话框</span></span><br><span class="line">  <span class="attr">navigateOnDragDrop</span>?: <span class="built_in">boolean</span>,      <span class="comment">// 拖拽导航</span></span><br><span class="line">  <span class="attr">autoplayPolicy</span>?: <span class="built_in">string</span>,           <span class="comment">// 自动播放策略</span></span><br><span class="line">  <span class="attr">disableHtmlFullscreenWindowResize</span>?: <span class="built_in">boolean</span>, <span class="comment">// 禁用HTML全屏窗口调整</span></span><br><span class="line">  <span class="attr">accessibleTitle</span>?: <span class="built_in">string</span>,          <span class="comment">// 辅助功能标题</span></span><br><span class="line">  <span class="attr">spellcheckerLanguage</span>?: <span class="built_in">string</span>,     <span class="comment">// 拼写检查语言</span></span><br><span class="line">  <span class="attr">autoHideCursor</span>?: <span class="built_in">boolean</span>,          <span class="comment">// 自动隐藏光标</span></span><br><span class="line">  <span class="attr">titleBarOverlay</span>?: <span class="built_in">boolean</span> | <span class="title class_">TitleBarOverlay</span>, <span class="comment">// 标题栏覆盖</span></span><br><span class="line">  <span class="attr">trafficLightPosition</span>?: <span class="title class_">Point</span>,      <span class="comment">// 交通灯位置（macOS）</span></span><br><span class="line">  <span class="attr">roundedCorners</span>?: <span class="built_in">boolean</span>,          <span class="comment">// 圆角（macOS）</span></span><br><span class="line">  <span class="attr">vibrancy</span>?: <span class="built_in">string</span>,                 <span class="comment">// 活力效果（macOS）</span></span><br><span class="line">  <span class="attr">visualEffectState</span>?: <span class="built_in">string</span>,        <span class="comment">// 视觉效果状态（macOS）</span></span><br><span class="line">  <span class="attr">titleBarStyle</span>?: <span class="built_in">string</span>,            <span class="comment">// 标题栏样式（macOS）</span></span><br><span class="line">  <span class="attr">hiddenInMissionControl</span>?: <span class="built_in">boolean</span>,  <span class="comment">// 在任务控制中隐藏（macOS）</span></span><br><span class="line">  <span class="attr">acceptFirstMouse</span>?: <span class="built_in">boolean</span>,        <span class="comment">// 接受首次鼠标（macOS）</span></span><br><span class="line">  <span class="attr">disableAutoHideCursor</span>?: <span class="built_in">boolean</span>,   <span class="comment">// 禁用自动隐藏光标（macOS）</span></span><br><span class="line">  <span class="attr">tabbingIdentifier</span>?: <span class="built_in">string</span>,        <span class="comment">// 标签标识符（macOS）</span></span><br><span class="line">  <span class="attr">webContents</span>?: <span class="title class_">WebContents</span>,         <span class="comment">// Web内容对象</span></span><br><span class="line">  <span class="attr">session</span>?: <span class="title class_">Session</span>,                 <span class="comment">// 会话对象</span></span><br><span class="line">  <span class="attr">partition</span>?: <span class="built_in">string</span>,                <span class="comment">// 分区</span></span><br><span class="line">  <span class="attr">affinity</span>?: <span class="built_in">string</span>,                 <span class="comment">// 亲和性</span></span><br><span class="line">  <span class="attr">zoomFactor</span>?: <span class="built_in">number</span>,               <span class="comment">// 缩放因子</span></span><br><span class="line">  <span class="attr">zoomLevel</span>?: <span class="built_in">number</span>,                <span class="comment">// 缩放级别</span></span><br><span class="line">  <span class="attr">preloadURL</span>?: <span class="built_in">string</span>,               <span class="comment">// 预加载URL</span></span><br><span class="line">  <span class="attr">preloadFile</span>?: <span class="built_in">string</span>,              <span class="comment">// 预加载文件</span></span><br><span class="line">  <span class="attr">preloadErrorCallback</span>?: <span class="function">(<span class="params"><span class="attr">error</span>: <span class="title class_">Error</span></span>) =&gt;</span> <span class="built_in">void</span>, <span class="comment">// 预加载错误回调</span></span><br><span class="line">  <span class="attr">preloadScripts</span>?: <span class="built_in">string</span>[],         <span class="comment">// 预加载脚本数组</span></span><br><span class="line">  <span class="attr">additionalArguments</span>?: <span class="built_in">string</span>[],    <span class="comment">// 额外参数</span></span><br><span class="line">  <span class="attr">safeDialogs</span>?: <span class="built_in">boolean</span>,             <span class="comment">// 安全对话框</span></span><br><span class="line">  <span class="attr">disableDialogs</span>?: <span class="built_in">boolean</span>,          <span class="comment">// 禁用对话框</span></span><br><span class="line">  <span class="attr">navigateOnDragDrop</span>?: <span class="built_in">boolean</span>,      <span class="comment">// 拖拽导航</span></span><br><span class="line">  <span class="attr">autoplayPolicy</span>?: <span class="built_in">string</span>,           <span class="comment">// 自动播放策略</span></span><br><span class="line">  <span class="attr">disableHtmlFullscreenWindowResize</span>?: <span class="built_in">boolean</span>, <span class="comment">// 禁用HTML全屏窗口调整</span></span><br><span class="line">  <span class="attr">accessibleTitle</span>?: <span class="built_in">string</span>,          <span class="comment">// 辅助功能标题</span></span><br><span class="line">  <span class="attr">spellcheckerLanguage</span>?: <span class="built_in">string</span>,     <span class="comment">// 拼写检查语言</span></span><br><span class="line">  <span class="attr">autoHideCursor</span>?: <span class="built_in">boolean</span>,          <span class="comment">// 自动隐藏光标</span></span><br><span class="line">  <span class="attr">titleBarOverlay</span>?: <span class="built_in">boolean</span> | <span class="title class_">TitleBarOverlay</span>, <span class="comment">// 标题栏覆盖</span></span><br><span class="line">  <span class="attr">trafficLightPosition</span>?: <span class="title class_">Point</span>,      <span class="comment">// 交通灯位置（macOS）</span></span><br><span class="line">  <span class="attr">roundedCorners</span>?: <span class="built_in">boolean</span>,          <span class="comment">// 圆角（macOS）</span></span><br><span class="line">  <span class="attr">vibrancy</span>?: <span class="built_in">string</span>,                 <span class="comment">// 活力效果（macOS）</span></span><br><span class="line">  <span class="attr">visualEffectState</span>?: <span class="built_in">string</span>,        <span class="comment">// 视觉效果状态（macOS）</span></span><br><span class="line">  <span class="attr">titleBarStyle</span>?: <span class="built_in">string</span>,            <span class="comment">// 标题栏样式（macOS）</span></span><br><span class="line">  <span class="attr">hiddenInMissionControl</span>?: <span class="built_in">boolean</span>,  <span class="comment">// 在任务控制中隐藏（macOS）</span></span><br><span class="line">  <span class="attr">acceptFirstMouse</span>?: <span class="built_in">boolean</span>,        <span class="comment">// 接受首次鼠标（macOS）</span></span><br><span class="line">  <span class="attr">disableAutoHideCursor</span>?: <span class="built_in">boolean</span>,   <span class="comment">// 禁用自动隐藏光标（macOS）</span></span><br><span class="line">  <span class="attr">tabbingIdentifier</span>?: <span class="built_in">string</span>,        <span class="comment">// 标签标识符（macOS）</span></span><br><span class="line">  <span class="attr">webContents</span>?: <span class="title class_">WebContents</span>,         <span class="comment">// Web内容对象</span></span><br><span class="line">  <span class="attr">session</span>?: <span class="title class_">Session</span>,                 <span class="comment">// 会话对象</span></span><br><span class="line">  <span class="attr">partition</span>?: <span class="built_in">string</span>,                <span class="comment">// 分区</span></span><br><span class="line">  <span class="attr">affinity</span>?: <span class="built_in">string</span>,                 <span class="comment">// 亲和性</span></span><br><span class="line">  <span class="attr">zoomFactor</span>?: <span class="built_in">number</span>,               <span class="comment">// 缩放因子</span></span><br><span class="line">  <span class="attr">zoomLevel</span>?: <span class="built_in">number</span>,                <span class="comment">// 缩放级别</span></span><br><span class="line">  <span class="attr">preloadURL</span>?: <span class="built_in">string</span>,               <span class="comment">// 预加载URL</span></span><br><span class="line">  <span class="attr">preloadFile</span>?: <span class="built_in">string</span>,              <span class="comment">// 预加载文件</span></span><br><span class="line">  <span class="attr">preloadErrorCallback</span>?: <span class="function">(<span class="params"><span class="attr">error</span>: <span class="title class_">Error</span></span>) =&gt;</span> <span class="built_in">void</span>, <span class="comment">// 预加载错误回调</span></span><br><span class="line">  <span class="attr">preloadScripts</span>?: <span class="built_in">string</span>[],         <span class="comment">// 预加载脚本数组</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>常用属性说明</strong>:</p>
+<ul>
+<li><strong><code>width/height</code></strong>: 设置窗口初始尺寸</li>
+<li><strong><code>show: false</code></strong>: 创建窗口但不立即显示，等准备好后再显示</li>
+<li><strong><code>frame: false</code></strong>: 创建无边框窗口，适合自定义标题栏</li>
+<li><strong><code>transparent: true</code></strong>: 启用透明背景，配合 <code>backgroundColor: &#39;#00000000&#39;</code></li>
+<li><strong><code>skipTaskbar: true</code></strong>: 窗口不在任务栏显示，适合后台应用</li>
+<li><strong><code>alwaysOnTop: true</code></strong>: 窗口始终置顶，适合字幕显示</li>
+<li><strong><code>resizable: false</code></strong>: 禁止用户调整窗口大小</li>
+<li><strong><code>webSecurity: false</code></strong>: 禁用web安全，允许跨域请求</li>
+<li><strong><code>preload</code></strong>: 指定预加载脚本，用于主进程和渲染进程通信</li>
+</ul>
+<h3 id="1-mainWindow-getBounds"><a href="#1-mainWindow-getBounds" class="headerlink" title="1. mainWindow.getBounds()"></a>1. <code>mainWindow.getBounds()</code></h3><p><strong>功能</strong>: 获取窗口的边界信息（位置和尺寸）</p>
+<p><strong>返回值</strong>:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Rectangle</span> &#123;</span><br><span class="line">  <span class="attr">x</span>: <span class="built_in">number</span>,      <span class="comment">// 窗口左上角X坐标</span></span><br><span class="line">  <span class="attr">y</span>: <span class="built_in">number</span>,      <span class="comment">// 窗口左上角Y坐标</span></span><br><span class="line">  <span class="attr">width</span>: <span class="built_in">number</span>,  <span class="comment">// 窗口宽度</span></span><br><span class="line">  <span class="attr">height</span>: <span class="built_in">number</span>  <span class="comment">// 窗口高度</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bounds = mainWindow.<span class="title function_">getBounds</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`窗口位置: (<span class="subst">$&#123;bounds.x&#125;</span>, <span class="subst">$&#123;bounds.y&#125;</span>)`</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`窗口尺寸: <span class="subst">$&#123;bounds.width&#125;</span>x<span class="subst">$&#123;bounds.height&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>保存窗口原始尺寸</li>
+<li>计算窗口位置变化</li>
+<li>停靠功能的位置计算</li>
+</ul>
+<h3 id="2-mainWindow-setBounds-options"><a href="#2-mainWindow-setBounds-options" class="headerlink" title="2. mainWindow.setBounds(options)"></a>2. <code>mainWindow.setBounds(options)</code></h3><p><strong>功能</strong>: 设置窗口的边界（位置和尺寸）</p>
+<p><strong>参数</strong>:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">options</span>: &#123;</span><br><span class="line">  <span class="attr">x</span>?: <span class="built_in">number</span>,      <span class="comment">// 窗口左上角X坐标</span></span><br><span class="line">  <span class="attr">y</span>?: <span class="built_in">number</span>,      <span class="comment">// 窗口左上角Y坐标</span></span><br><span class="line">  <span class="attr">width</span>?: <span class="built_in">number</span>,  <span class="comment">// 窗口宽度</span></span><br><span class="line">  <span class="attr">height</span>?: <span class="built_in">number</span>  <span class="comment">// 窗口高度</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置窗口位置和尺寸</span></span><br><span class="line">mainWindow.<span class="title function_">setBounds</span>(&#123;</span><br><span class="line">  <span class="attr">x</span>: <span class="number">100</span>,</span><br><span class="line">  <span class="attr">y</span>: <span class="number">100</span>,</span><br><span class="line">  <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">  <span class="attr">height</span>: <span class="number">600</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 只设置高度</span></span><br><span class="line">mainWindow.<span class="title function_">setBounds</span>(&#123;</span><br><span class="line">  <span class="attr">height</span>: <span class="number">300</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>窗口停靠到顶部&#x2F;底部</li>
+<li>动态调整窗口高度</li>
+<li>窗口拖拽后的位置恢复</li>
+</ul>
+<h3 id="3-mainWindow-getPosition"><a href="#3-mainWindow-getPosition" class="headerlink" title="3. mainWindow.getPosition()"></a>3. <code>mainWindow.getPosition()</code></h3><p><strong>功能</strong>: 获取窗口的当前位置</p>
+<p><strong>返回值</strong>: <code>[number, number]</code> - [x, y] 坐标数组</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [winX, winY] = mainWindow.<span class="title function_">getPosition</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`窗口位置: (<span class="subst">$&#123;winX&#125;</span>, <span class="subst">$&#123;winY&#125;</span>)`</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-mainWindow-show"><a href="#4-mainWindow-show" class="headerlink" title="4. mainWindow.show()"></a>4. <code>mainWindow.show()</code></h3><p><strong>功能</strong>: 显示窗口</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">show</span>();</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>托盘菜单显示窗口</li>
+<li>窗口初始化完成后显示</li>
+<li>从最小化状态恢复</li>
+</ul>
+<h3 id="5-mainWindow-hide"><a href="#5-mainWindow-hide" class="headerlink" title="5. mainWindow.hide()"></a>5. <code>mainWindow.hide()</code></h3><p><strong>功能</strong>: 隐藏窗口</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">hide</span>();</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>托盘菜单隐藏窗口</li>
+<li>窗口关闭时隐藏而不是退出</li>
+</ul>
+<h3 id="6-mainWindow-close"><a href="#6-mainWindow-close" class="headerlink" title="6. mainWindow.close()"></a>6. <code>mainWindow.close()</code></h3><p><strong>功能</strong>: 关闭窗口</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">close</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-mainWindow-focus"><a href="#7-mainWindow-focus" class="headerlink" title="7. mainWindow.focus()"></a>7. <code>mainWindow.focus()</code></h3><p><strong>功能</strong>: 聚焦窗口（使窗口成为活动窗口）</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">focus</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-mainWindow-reload"><a href="#8-mainWindow-reload" class="headerlink" title="8. mainWindow.reload()"></a>8. <code>mainWindow.reload()</code></h3><p><strong>功能</strong>: 重新加载窗口内容</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">reload</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-mainWindow-isVisible"><a href="#9-mainWindow-isVisible" class="headerlink" title="9. mainWindow.isVisible()"></a>9. <code>mainWindow.isVisible()</code></h3><p><strong>功能</strong>: 检查窗口是否可见</p>
+<p><strong>返回值</strong>: <code>boolean</code></p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (mainWindow.<span class="title function_">isVisible</span>()) &#123;</span><br><span class="line">  mainWindow.<span class="title function_">hide</span>();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  mainWindow.<span class="title function_">show</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-mainWindow-isMinimized"><a href="#10-mainWindow-isMinimized" class="headerlink" title="10. mainWindow.isMinimized()"></a>10. <code>mainWindow.isMinimized()</code></h3><p><strong>功能</strong>: 检查窗口是否最小化</p>
+<p><strong>返回值</strong>: <code>boolean</code></p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (mainWindow.<span class="title function_">isMinimized</span>()) &#123;</span><br><span class="line">  mainWindow.<span class="title function_">restore</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-mainWindow-restore"><a href="#11-mainWindow-restore" class="headerlink" title="11. mainWindow.restore()"></a>11. <code>mainWindow.restore()</code></h3><p><strong>功能</strong>: 从最小化状态恢复窗口</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">restore</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="12-mainWindow-setMovable-boolean"><a href="#12-mainWindow-setMovable-boolean" class="headerlink" title="12. mainWindow.setMovable(boolean)"></a>12. <code>mainWindow.setMovable(boolean)</code></h3><p><strong>功能</strong>: 设置窗口是否可移动</p>
+<p><strong>参数</strong>: <code>boolean</code> - true允许移动，false禁止移动</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">setMovable</span>(<span class="literal">false</span>); <span class="comment">// 禁止移动</span></span><br><span class="line">mainWindow.<span class="title function_">setMovable</span>(<span class="literal">true</span>); <span class="comment">// 允许移动</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="13-mainWindow-setResizable-boolean"><a href="#13-mainWindow-setResizable-boolean" class="headerlink" title="13. mainWindow.setResizable(boolean)"></a>13. <code>mainWindow.setResizable(boolean)</code></h3><p><strong>功能</strong>: 设置窗口是否可调整大小</p>
+<p><strong>参数</strong>: <code>boolean</code> - true允许调整，false禁止调整</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">setResizable</span>(<span class="literal">false</span>); <span class="comment">// 禁止调整大小</span></span><br><span class="line">mainWindow.<span class="title function_">setResizable</span>(<span class="literal">true</span>); <span class="comment">// 允许调整大小</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="14-mainWindow-setFullScreen-boolean"><a href="#14-mainWindow-setFullScreen-boolean" class="headerlink" title="14. mainWindow.setFullScreen(boolean)"></a>14. <code>mainWindow.setFullScreen(boolean)</code></h3><p><strong>功能</strong>: 设置窗口全屏状态</p>
+<p><strong>参数</strong>: <code>boolean</code> - true全屏，false退出全屏</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">setFullScreen</span>(<span class="literal">true</span>); <span class="comment">// 进入全屏</span></span><br><span class="line">mainWindow.<span class="title function_">setFullScreen</span>(<span class="literal">false</span>); <span class="comment">// 退出全屏</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="15-mainWindow-loadURL-url"><a href="#15-mainWindow-loadURL-url" class="headerlink" title="15. mainWindow.loadURL(url)"></a>15. <code>mainWindow.loadURL(url)</code></h3><p><strong>功能</strong>: 加载指定URL</p>
+<p><strong>参数</strong>: <code>string</code> - 要加载的URL</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">loadURL</span>(<span class="string">&quot;https://example.com&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="16-mainWindow-loadFile-path"><a href="#16-mainWindow-loadFile-path" class="headerlink" title="16. mainWindow.loadFile(path)"></a>16. <code>mainWindow.loadFile(path)</code></h3><p><strong>功能</strong>: 加载本地HTML文件</p>
+<p><strong>参数</strong>: <code>string</code> - 文件路径</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">loadFile</span>(<span class="title function_">join</span>(__dirname, <span class="string">&quot;../renderer/index.html&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="17-mainWindow-webContents"><a href="#17-mainWindow-webContents" class="headerlink" title="17. mainWindow.webContents"></a>17. <code>mainWindow.webContents</code></h3><p><strong>功能</strong>: 访问网页内容相关API</p>
+<p><strong>常用方法</strong>:</p>
+<ul>
+<li><code>webContents.openDevTools()</code> - 打开开发者工具</li>
+<li><code>webContents.send(channel, ...args)</code> - 向渲染进程发送消息</li>
+<li><code>webContents.once(event, listener)</code> - 监听一次性事件</li>
+<li><code>webContents.setWindowOpenHandler(handler)</code> - 设置窗口打开处理器</li>
+</ul>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 打开开发者工具</span></span><br><span class="line">mainWindow.<span class="property">webContents</span>.<span class="title function_">openDevTools</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 发送消息到渲染进程</span></span><br><span class="line">mainWindow.<span class="property">webContents</span>.<span class="title function_">send</span>(<span class="string">&quot;snap-status&quot;</span>, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听页面加载完成</span></span><br><span class="line">mainWindow.<span class="property">webContents</span>.<span class="title function_">once</span>(<span class="string">&quot;did-finish-load&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;页面加载完成&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🖥️-Screen-API"><a href="#🖥️-Screen-API" class="headerlink" title="🖥️ Screen API"></a>🖥️ Screen API</h2><h3 id="1-screen-getPrimaryDisplay"><a href="#1-screen-getPrimaryDisplay" class="headerlink" title="1. screen.getPrimaryDisplay()"></a>1. <code>screen.getPrimaryDisplay()</code></h3><p><strong>功能</strong>: 获取主显示器信息</p>
+<p><strong>返回值</strong>:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Display</span> &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">bounds</span>: <span class="title class_">Rectangle</span>,     <span class="comment">// 显示器边界</span></span><br><span class="line">  <span class="attr">workArea</span>: <span class="title class_">Rectangle</span>,   <span class="comment">// 工作区域（排除任务栏等）</span></span><br><span class="line">  <span class="attr">scaleFactor</span>: <span class="built_in">number</span>,   <span class="comment">// 缩放因子</span></span><br><span class="line">  <span class="attr">rotation</span>: <span class="built_in">number</span>,      <span class="comment">// 旋转角度</span></span><br><span class="line">  <span class="attr">touchSupport</span>: <span class="built_in">string</span>,  <span class="comment">// 触摸支持</span></span><br><span class="line">  <span class="attr">monochrome</span>: <span class="built_in">boolean</span>,   <span class="comment">// 是否单色</span></span><br><span class="line">  <span class="attr">accelerometerSupport</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">colorSpace</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">colorDepth</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">depthPerComponent</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">displayFrequency</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">size</span>: <span class="title class_">Size</span>,           <span class="comment">// 显示器尺寸</span></span><br><span class="line">  <span class="attr">workAreaSize</span>: <span class="title class_">Size</span>    <span class="comment">// 工作区域尺寸</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> primaryDisplay = screen.<span class="title function_">getPrimaryDisplay</span>();</span><br><span class="line"><span class="keyword">const</span> &#123; width, height &#125; = primaryDisplay.<span class="property">workAreaSize</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`主显示器工作区域: <span class="subst">$&#123;width&#125;</span>x<span class="subst">$&#123;height&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>获取屏幕宽度设置窗口初始大小</li>
+<li>获取工作区域计算停靠位置</li>
+</ul>
+<h3 id="2-screen-getAllDisplays"><a href="#2-screen-getAllDisplays" class="headerlink" title="2. screen.getAllDisplays()"></a>2. <code>screen.getAllDisplays()</code></h3><p><strong>功能</strong>: 获取所有显示器信息</p>
+<p><strong>返回值</strong>: <code>Display[]</code> - 显示器数组</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> displays = screen.<span class="title function_">getAllDisplays</span>();</span><br><span class="line">displays.<span class="title function_">forEach</span>(<span class="function">(<span class="params">display, index</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">    <span class="string">`显示器 <span class="subst">$&#123;index&#125;</span>: <span class="subst">$&#123;display.bounds.width&#125;</span>x<span class="subst">$&#123;display.bounds.height&#125;</span>`</span>,</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>多屏幕环境下查找指定显示器</li>
+<li>窗口跨屏移动时的显示器切换</li>
+</ul>
+<h3 id="3-screen-getDisplayNearestPoint-point"><a href="#3-screen-getDisplayNearestPoint-point" class="headerlink" title="3. screen.getDisplayNearestPoint(point)"></a>3. <code>screen.getDisplayNearestPoint(point)</code></h3><p><strong>功能</strong>: 获取最接近指定点的显示器</p>
+<p><strong>参数</strong>:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">point</span>: &#123;</span><br><span class="line">  <span class="attr">x</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">y</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>返回值</strong>: <code>Display</code></p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> windowCenter = &#123;</span><br><span class="line">  <span class="attr">x</span>: winX + windowWidth / <span class="number">2</span>,</span><br><span class="line">  <span class="attr">y</span>: winY + windowHeight / <span class="number">2</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> currentScreen = screen.<span class="title function_">getDisplayNearestPoint</span>(windowCenter);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>确定窗口当前所在的屏幕</li>
+<li>多屏幕环境下的窗口停靠</li>
+</ul>
+<h3 id="4-screen-getCursorScreenPoint"><a href="#4-screen-getCursorScreenPoint" class="headerlink" title="4. screen.getCursorScreenPoint()"></a>4. <code>screen.getCursorScreenPoint()</code></h3><p><strong>功能</strong>: 获取鼠标光标的屏幕坐标</p>
+<p><strong>返回值</strong>: <code>Point</code> - {x: number, y: number}</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cursorPos = screen.<span class="title function_">getCursorScreenPoint</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`鼠标位置: (<span class="subst">$&#123;cursorPos.x&#125;</span>, <span class="subst">$&#123;cursorPos.y&#125;</span>)`</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>窗口拖拽时跟随鼠标位置</li>
+<li>取消停靠时的窗口位置计算</li>
+</ul>
+<hr>
+<h2 id="🚀-App-API"><a href="#🚀-App-API" class="headerlink" title="🚀 App API"></a>🚀 App API</h2><h3 id="1-app-whenReady"><a href="#1-app-whenReady" class="headerlink" title="1. app.whenReady()"></a>1. <code>app.whenReady()</code></h3><p><strong>功能</strong>: 当Electron初始化完成时触发</p>
+<p><strong>返回值</strong>: <code>Promise&lt;void&gt;</code></p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">whenReady</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">createWindow</span>();</span><br><span class="line">  <span class="title function_">createTray</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-app-quit"><a href="#2-app-quit" class="headerlink" title="2. app.quit()"></a>2. <code>app.quit()</code></h3><p><strong>功能</strong>: 退出应用程序</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">quit</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-app-on-event-listener"><a href="#3-app-on-event-listener" class="headerlink" title="3. app.on(event, listener)"></a>3. <code>app.on(event, listener)</code></h3><p><strong>功能</strong>: 监听应用程序事件</p>
+<p><strong>常用事件</strong>:</p>
+<ul>
+<li><code>activate</code> - 应用被激活（macOS）</li>
+<li><code>window-all-closed</code> - 所有窗口关闭</li>
+<li><code>browser-window-created</code> - 创建浏览器窗口</li>
+<li><code>open-url</code> - 打开URL协议</li>
+<li><code>second-instance</code> - 第二个实例启动</li>
+</ul>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">on</span>(<span class="string">&quot;window-all-closed&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (process.<span class="property">platform</span> !== <span class="string">&quot;darwin&quot;</span>) &#123;</span><br><span class="line">    app.<span class="title function_">quit</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">on</span>(<span class="string">&quot;activate&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title class_">BrowserWindow</span>.<span class="title function_">getAllWindows</span>().<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="title function_">createWindow</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-app-getAppPath"><a href="#4-app-getAppPath" class="headerlink" title="4. app.getAppPath()"></a>4. <code>app.getAppPath()</code></h3><p><strong>功能</strong>: 获取应用程序路径</p>
+<p><strong>返回值</strong>: <code>string</code></p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> appPath = app.<span class="title function_">getAppPath</span>();</span><br><span class="line"><span class="keyword">const</span> iconPath = <span class="title function_">join</span>(appPath, <span class="string">&quot;resources/icon.png&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-app-setAsDefaultProtocolClient-protocol"><a href="#5-app-setAsDefaultProtocolClient-protocol" class="headerlink" title="5. app.setAsDefaultProtocolClient(protocol)"></a>5. <code>app.setAsDefaultProtocolClient(protocol)</code></h3><p><strong>功能</strong>: 设置应用程序为默认协议客户端，&#x2F;&#x2F;往注册表里面填写，但是只有打开软件的时候才会往注册表注册</p>
+<p><strong>参数</strong>: <code>string</code> - 协议名称</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">setAsDefaultProtocolClient</span>(<span class="string">&quot;ketang-clients&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-app-requestSingleInstanceLock"><a href="#6-app-requestSingleInstanceLock" class="headerlink" title="6. app.requestSingleInstanceLock()"></a>6. <code>app.requestSingleInstanceLock()</code></h3><p><strong>功能</strong>: 请求单实例锁</p>
+<p><strong>返回值</strong>: <code>boolean</code> - 是否成功获取锁</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gotTheLock = app.<span class="title function_">requestSingleInstanceLock</span>();</span><br><span class="line"><span class="keyword">if</span> (!gotTheLock) &#123;</span><br><span class="line">  app.<span class="title function_">quit</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📡-IpcMain-API"><a href="#📡-IpcMain-API" class="headerlink" title="📡 IpcMain API"></a>📡 IpcMain API</h2><h3 id="1-ipcMain-on-channel-listener"><a href="#1-ipcMain-on-channel-listener" class="headerlink" title="1. ipcMain.on(channel, listener)"></a>1. <code>ipcMain.on(channel, listener)</code></h3><p><strong>功能</strong>: 监听渲染进程发送的消息</p>
+<p><strong>参数</strong>:</p>
+<ul>
+<li><code>channel: string</code> - 消息频道</li>
+<li><code>listener: (event, ...args) =&gt; void</code> - 监听器函数</li>
+</ul>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ipcMain.<span class="title function_">on</span>(<span class="string">&quot;set-height&quot;</span>, <span class="function">(<span class="params">_event, newHeight</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (mainWindow) &#123;</span><br><span class="line">    mainWindow.<span class="title function_">setBounds</span>(&#123;</span><br><span class="line">      <span class="attr">height</span>: newHeight.<span class="property">data</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用场景</strong>:</p>
+<ul>
+<li><code>set-initial-position</code> - 设置窗口初始位置</li>
+<li><code>set-height</code> - 设置窗口高度</li>
+<li><code>set-window-visibility</code> - 设置窗口显示&#x2F;隐藏</li>
+<li><code>close-window</code> - 关闭窗口</li>
+<li><code>set-full-screen</code> - 设置全屏状态</li>
+<li><code>refresh-main-window</code> - 刷新主窗口</li>
+<li><code>show-warning-dialog</code> - 显示警告对话框</li>
+</ul>
+<h3 id="2-ipcMain-handle-channel-listener"><a href="#2-ipcMain-handle-channel-listener" class="headerlink" title="2. ipcMain.handle(channel, listener)"></a>2. <code>ipcMain.handle(channel, listener)</code></h3><p><strong>功能</strong>: 处理渲染进程的异步请求</p>
+<p><strong>参数</strong>:</p>
+<ul>
+<li><code>channel: string</code> - 消息频道</li>
+<li><code>listener: (event, ...args) =&gt; Promise&lt;any&gt;</code> - 处理器函数</li>
+</ul>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ipcMain.<span class="title function_">handle</span>(<span class="string">&quot;load-settings&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> store.<span class="title function_">get</span>(<span class="string">&quot;userSettings&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🗂️-Tray-API"><a href="#🗂️-Tray-API" class="headerlink" title="🗂️ Tray API"></a>🗂️ Tray API</h2><h3 id="1-new-Tray-iconPath"><a href="#1-new-Tray-iconPath" class="headerlink" title="1. new Tray(iconPath)"></a>1. <code>new Tray(iconPath)</code></h3><p><strong>功能</strong>: 创建系统托盘图标</p>
+<p><strong>参数</strong>: <code>string</code> - 图标文件路径</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tray = <span class="keyword">new</span> <span class="title class_">Tray</span>(iconPath);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-tray-setContextMenu-menu"><a href="#2-tray-setContextMenu-menu" class="headerlink" title="2. tray.setContextMenu(menu)"></a>2. <code>tray.setContextMenu(menu)</code></h3><p><strong>功能</strong>: 设置托盘右键菜单</p>
+<p><strong>参数</strong>: <code>Menu</code> - 菜单对象</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> contextMenu = <span class="title class_">Menu</span>.<span class="title function_">buildFromTemplate</span>(menuTemplate);</span><br><span class="line">tray.<span class="title function_">setContextMenu</span>(contextMenu);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-tray-destroy"><a href="#3-tray-destroy" class="headerlink" title="3. tray.destroy()"></a>3. <code>tray.destroy()</code></h3><p><strong>功能</strong>: 销毁托盘图标</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (tray) &#123;</span><br><span class="line">  tray.<span class="title function_">destroy</span>();</span><br><span class="line">  tray = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📋-Menu-API"><a href="#📋-Menu-API" class="headerlink" title="📋 Menu API"></a>📋 Menu API</h2><h3 id="1-Menu-buildFromTemplate-template"><a href="#1-Menu-buildFromTemplate-template" class="headerlink" title="1. Menu.buildFromTemplate(template)"></a>1. <code>Menu.buildFromTemplate(template)</code></h3><p><strong>功能</strong>: 从模板创建菜单</p>
+<p><strong>参数</strong>: <code>MenuItemConstructorOptions[]</code> - 菜单项数组</p>
+<p><strong>返回值</strong>: <code>Menu</code></p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> menuTemplate = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">label</span>: <span class="string">&quot;显示/隐藏&quot;</span>,</span><br><span class="line">    <span class="attr">click</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (mainWindow.<span class="title function_">isVisible</span>()) &#123;</span><br><span class="line">        mainWindow.<span class="title function_">hide</span>();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mainWindow.<span class="title function_">show</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">label</span>: <span class="string">&quot;行数模式&quot;</span>,</span><br><span class="line">    <span class="attr">submenu</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">label</span>: <span class="string">&quot;单行&quot;</span>,</span><br><span class="line">        <span class="attr">click</span>: <span class="function">() =&gt;</span> <span class="title function_">setLineMode</span>(<span class="number">1</span>),</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">label</span>: <span class="string">&quot;双行&quot;</span>,</span><br><span class="line">        <span class="attr">click</span>: <span class="function">() =&gt;</span> <span class="title function_">setLineMode</span>(<span class="number">2</span>),</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> contextMenu = <span class="title class_">Menu</span>.<span class="title function_">buildFromTemplate</span>(menuTemplate);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-MenuItemConstructorOptions"><a href="#2-MenuItemConstructorOptions" class="headerlink" title="2. MenuItemConstructorOptions"></a>2. <code>MenuItemConstructorOptions</code></h3><p><strong>功能</strong>: 菜单项配置选项</p>
+<p><strong>属性</strong>:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">label</span>?: <span class="built_in">string</span>,           <span class="comment">// 菜单项标签</span></span><br><span class="line">  <span class="attr">click</span>?: <span class="function">() =&gt;</span> <span class="built_in">void</span>,       <span class="comment">// 点击事件处理器</span></span><br><span class="line">  <span class="attr">type</span>?: <span class="string">&#x27;normal&#x27;</span> | <span class="string">&#x27;separator&#x27;</span> | <span class="string">&#x27;submenu&#x27;</span> | <span class="string">&#x27;checkbox&#x27;</span> | <span class="string">&#x27;radio&#x27;</span>,</span><br><span class="line">  <span class="attr">submenu</span>?: <span class="title class_">MenuItemConstructorOptions</span>[], <span class="comment">// 子菜单</span></span><br><span class="line">  <span class="attr">enabled</span>?: <span class="built_in">boolean</span>,        <span class="comment">// 是否启用</span></span><br><span class="line">  <span class="attr">visible</span>?: <span class="built_in">boolean</span>,        <span class="comment">// 是否可见</span></span><br><span class="line">  <span class="attr">checked</span>?: <span class="built_in">boolean</span>,        <span class="comment">// 是否选中（checkbox/radio类型）</span></span><br><span class="line">  <span class="attr">accelerator</span>?: <span class="built_in">string</span>,     <span class="comment">// 快捷键</span></span><br><span class="line">  <span class="attr">icon</span>?: <span class="built_in">string</span> | <span class="title class_">NativeImage</span> <span class="comment">// 图标</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💬-Dialog-API"><a href="#💬-Dialog-API" class="headerlink" title="💬 Dialog API"></a>💬 Dialog API</h2><h3 id="1-dialog-showMessageBox-options"><a href="#1-dialog-showMessageBox-options" class="headerlink" title="1. dialog.showMessageBox(options)"></a>1. <code>dialog.showMessageBox(options)</code></h3><p><strong>功能</strong>: 显示消息对话框</p>
+<p><strong>参数</strong>:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">options</span>: &#123;</span><br><span class="line">  <span class="attr">type</span>?: <span class="string">&#x27;none&#x27;</span> | <span class="string">&#x27;info&#x27;</span> | <span class="string">&#x27;error&#x27;</span> | <span class="string">&#x27;question&#x27;</span> | <span class="string">&#x27;warning&#x27;</span>,</span><br><span class="line">  <span class="attr">buttons</span>?: <span class="built_in">string</span>[],       <span class="comment">// 按钮数组</span></span><br><span class="line">  <span class="attr">defaultId</span>?: <span class="built_in">number</span>,       <span class="comment">// 默认按钮索引</span></span><br><span class="line">  <span class="attr">title</span>?: <span class="built_in">string</span>,          <span class="comment">// 对话框标题</span></span><br><span class="line">  <span class="attr">message</span>?: <span class="built_in">string</span>,        <span class="comment">// 主要消息</span></span><br><span class="line">  <span class="attr">detail</span>?: <span class="built_in">string</span>,         <span class="comment">// 详细消息</span></span><br><span class="line">  <span class="attr">icon</span>?: <span class="title class_">NativeImage</span>,      <span class="comment">// 图标</span></span><br><span class="line">  <span class="attr">cancelId</span>?: <span class="built_in">number</span>,       <span class="comment">// 取消按钮索引</span></span><br><span class="line">  <span class="attr">noLink</span>?: <span class="built_in">boolean</span>,        <span class="comment">// 按钮是否为链接样式</span></span><br><span class="line">  <span class="attr">normalizeAccessKeys</span>?: <span class="built_in">boolean</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dialog.<span class="title function_">showMessageBox</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;info&quot;</span>,</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&quot;温馨提示&quot;</span>,</span><br><span class="line">  <span class="attr">message</span>: <span class="string">&quot;这是一个提示消息&quot;</span>,</span><br><span class="line">  <span class="attr">buttons</span>: [<span class="string">&quot;OK&quot;</span>],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>显示警告提示</li>
+<li>用户确认操作</li>
+</ul>
+<hr>
+<h2 id="🎧-事件监听-API"><a href="#🎧-事件监听-API" class="headerlink" title="🎧 事件监听 API"></a>🎧 事件监听 API</h2><h3 id="BrowserWindow-事件"><a href="#BrowserWindow-事件" class="headerlink" title="BrowserWindow 事件"></a>BrowserWindow 事件</h3><h4 id="1-ready-to-show"><a href="#1-ready-to-show" class="headerlink" title="1. ready-to-show"></a>1. <code>ready-to-show</code></h4><p><strong>功能</strong>: 窗口准备显示时触发</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">on</span>(<span class="string">&quot;ready-to-show&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  originalBounds = mainWindow.<span class="title function_">getBounds</span>();</span><br><span class="line">  <span class="comment">// 设置初始位置等操作</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>保存窗口初始尺寸</li>
+<li>设置窗口默认停靠位置</li>
+</ul>
+<h4 id="2-move"><a href="#2-move" class="headerlink" title="2. move"></a>2. <code>move</code></h4><p><strong>功能</strong>: 窗口移动时触发</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">on</span>(<span class="string">&quot;move&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> [winX, winY] = mainWindow.<span class="title function_">getPosition</span>();</span><br><span class="line">  <span class="comment">// 处理窗口位置变化</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中的使用</strong>:</p>
+<ul>
+<li>实现窗口自动停靠功能</li>
+<li>检测窗口是否需要吸附到屏幕边缘</li>
+</ul>
+<h4 id="3-close"><a href="#3-close" class="headerlink" title="3. close"></a>3. <code>close</code></h4><p><strong>功能</strong>: 窗口关闭时触发</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">on</span>(<span class="string">&quot;close&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  event.<span class="title function_">preventDefault</span>(); <span class="comment">// 阻止关闭</span></span><br><span class="line">  mainWindow.<span class="title function_">hide</span>(); <span class="comment">// 隐藏窗口</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-show-hide"><a href="#4-show-hide" class="headerlink" title="4. show &#x2F; hide"></a>4. <code>show</code> &#x2F; <code>hide</code></h4><p><strong>功能</strong>: 窗口显示&#x2F;隐藏时触发</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">on</span>(<span class="string">&quot;show&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;窗口显示&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">mainWindow.<span class="title function_">on</span>(<span class="string">&quot;hide&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;窗口隐藏&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-enter-full-screen-leave-full-screen"><a href="#5-enter-full-screen-leave-full-screen" class="headerlink" title="5. enter-full-screen &#x2F; leave-full-screen"></a>5. <code>enter-full-screen</code> &#x2F; <code>leave-full-screen</code></h4><p><strong>功能</strong>: 进入&#x2F;退出全屏时触发</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="title function_">on</span>(<span class="string">&quot;enter-full-screen&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;进入全屏&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">mainWindow.<span class="title function_">on</span>(<span class="string">&quot;leave-full-screen&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;退出全屏&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="WebContents-事件"><a href="#WebContents-事件" class="headerlink" title="WebContents 事件"></a>WebContents 事件</h3><h4 id="1-did-finish-load"><a href="#1-did-finish-load" class="headerlink" title="1. did-finish-load"></a>1. <code>did-finish-load</code></h4><p><strong>功能</strong>: 页面加载完成时触发</p>
+<p><strong>使用示例</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.<span class="property">webContents</span>.<span class="title function_">once</span>(<span class="string">&quot;did-finish-load&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;页面加载完成&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🔧-坐标系统说明"><a href="#🔧-坐标系统说明" class="headerlink" title="🔧 坐标系统说明"></a>🔧 坐标系统说明</h2><h3 id="屏幕坐标系"><a href="#屏幕坐标系" class="headerlink" title="屏幕坐标系"></a>屏幕坐标系</h3><ul>
+<li><strong>原点</strong>: 屏幕左上角 (0, 0)</li>
+<li><strong>X轴</strong>: 从左到右递增</li>
+<li><strong>Y轴</strong>: 从上到下递增</li>
+</ul>
+<h3 id="窗口坐标计算"><a href="#窗口坐标计算" class="headerlink" title="窗口坐标计算"></a>窗口坐标计算</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 窗口边界</span></span><br><span class="line"><span class="keyword">const</span> bounds = &#123;</span><br><span class="line">  <span class="attr">x</span>: <span class="number">100</span>, <span class="comment">// 窗口左上角X坐标</span></span><br><span class="line">  <span class="attr">y</span>: <span class="number">50</span>, <span class="comment">// 窗口左上角Y坐标</span></span><br><span class="line">  <span class="attr">width</span>: <span class="number">800</span>, <span class="comment">// 窗口宽度</span></span><br><span class="line">  <span class="attr">height</span>: <span class="number">600</span>, <span class="comment">// 窗口高度</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 窗口右下角坐标</span></span><br><span class="line"><span class="keyword">const</span> rightBottom = &#123;</span><br><span class="line">  <span class="attr">x</span>: bounds.<span class="property">x</span> + bounds.<span class="property">width</span>, <span class="comment">// 900</span></span><br><span class="line">  <span class="attr">y</span>: bounds.<span class="property">y</span> + bounds.<span class="property">height</span>, <span class="comment">// 650</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 窗口中心坐标</span></span><br><span class="line"><span class="keyword">const</span> center = &#123;</span><br><span class="line">  <span class="attr">x</span>: bounds.<span class="property">x</span> + bounds.<span class="property">width</span> / <span class="number">2</span>, <span class="comment">// 500</span></span><br><span class="line">  <span class="attr">y</span>: bounds.<span class="property">y</span> + bounds.<span class="property">height</span> / <span class="number">2</span>, <span class="comment">// 350</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多屏幕环境"><a href="#多屏幕环境" class="headerlink" title="多屏幕环境"></a>多屏幕环境</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取所有显示器</span></span><br><span class="line"><span class="keyword">const</span> displays = screen.<span class="title function_">getAllDisplays</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 主显示器</span></span><br><span class="line"><span class="keyword">const</span> primaryDisplay = screen.<span class="title function_">getPrimaryDisplay</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据窗口位置找到所在屏幕</span></span><br><span class="line"><span class="keyword">const</span> windowCenter = &#123;</span><br><span class="line">  <span class="attr">x</span>: bounds.<span class="property">x</span> + bounds.<span class="property">width</span> / <span class="number">2</span>,</span><br><span class="line">  <span class="attr">y</span>: bounds.<span class="property">y</span> + bounds.<span class="property">height</span> / <span class="number">2</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> currentScreen = screen.<span class="title function_">getDisplayNearestPoint</span>(windowCenter);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📝-使用建议"><a href="#📝-使用建议" class="headerlink" title="📝 使用建议"></a>📝 使用建议</h2><ol>
+<li><strong>窗口边界操作</strong>: 使用<code>getBounds()</code>获取当前状态，<code>setBounds()</code>设置新状态</li>
+<li><strong>屏幕适配</strong>: 使用<code>screen.getPrimaryDisplay()</code>获取屏幕信息，适配不同分辨率</li>
+<li><strong>事件监听</strong>: 合理使用<code>on()</code>持续监听和<code>once()</code>单次监听</li>
+<li><strong>多屏幕支持</strong>: 使用<code>getDisplayNearestPoint()</code>处理多屏幕环境</li>
+<li><strong>进程通信</strong>: 使用<code>ipcMain.on()</code>处理渲染进程消息</li>
+<li><strong>托盘功能</strong>: 使用<code>Tray</code>和<code>Menu</code>创建系统托盘交互</li>
+</ol>
+<hr>
+<h2 id="🔗-相关链接"><a href="#🔗-相关链接" class="headerlink" title="🔗 相关链接"></a>🔗 相关链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.electronjs.org/docs">Electron 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.electronjs.org/docs/api/browser-window">BrowserWindow API</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.electronjs.org/docs/api/screen">Screen API</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.electronjs.org/docs/api/app">App API</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.electronjs.org/docs/api/ipc-main">IpcMain API</a></li>
+</ul>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <span class="article-action article-action--prev is-disabled" aria-disabled="true">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">没有更早的文章了</span>
+      </span>
+    
+    
+      <a class="article-action article-action--next" href="/2026/07/31/electron/%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E7%BB%86%E8%8A%82%E9%85%8D%E7%BD%AE/">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">桌面应用细节配置</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/2026/07/31/electron/%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E7%BB%86%E8%8A%82%E9%85%8D%E7%BD%AE/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/camera.webp" alt="" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">桌面应用细节配置</strong>
+            <em class="related-card__date">2026-07-31</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/2026/07/27/electron/web%E7%AB%AF%E5%94%A4%E9%86%92%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/mountain.webp" alt="" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">web端唤醒桌面应用配置</strong>
+            <em class="related-card__date">2026-07-27</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Jie</span>
+  
+    <span class="site-footer__right">
+      
+        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+      
+    </span>
+  
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","guestbook.label":"留言板","guestbook.title":"留言板","guestbook.loading":"正在铺开留言墙…","guestbook.missing_config":"留言墙需要评论系统：请在主题配置中设置 comments: twikoo（并填写 envId）或 comments: artalk（并填写 server）。","guestbook.load_failed":"留言加载失败，请稍后再试。","guestbook.empty":"墙上还空着，来贴第一张留言吧！","guestbook.load_more":"展开更多留言","guestbook.total_count":"共 %d 条留言","guestbook.latest_note":"墙上展示最新 %d 条","guestbook.jump_to_comment":"查看留言","guestbook.sort_time":"查看最新","guestbook.sort_random":"随机排序","guestbook.anonymous":"匿名访客","guestbook.write_hint":"在下方留言，刷新后就会贴到墙上","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+  <script id="__bs_script__">//<![CDATA[document.write("<script async src='http://HOST:3001/browser-sync/browser-sync-client.js'><\/script>".replace("HOST", location.hostname));//]]></script>
+  
+</body>
+</html>
