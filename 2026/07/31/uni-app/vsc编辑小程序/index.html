@@ -15,14 +15,15 @@
 <meta property="og:description" content="搭建uni-app项目前情提要微信开发者工具编写代码已经是过去式，不方便且语法已经老旧了，现在使用vsc来进行编码，使其转换成微信小程序代码，方便实时调试。 核心原理微信开发者工具内置了 文件监听（File Watcher） 机制，会自动检测项目目录下的文件变化并触发重新编译。因此只需要用 VS Code 编辑源码，微信开发者工具就会自动刷新预览，无需安装任...">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-31T07:09:37.769Z">
-<meta property="article:modified_time" content="2026-08-10T01:23:24.852Z">
+<meta property="article:modified_time" content="2026-08-10T03:03:24.250Z">
 <meta property="article:author" content="Jie">
+<meta property="article:tag" content="uni-app">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="http://example.com/2026/07/31/uni-app/vsc%E7%BC%96%E8%BE%91%E5%B0%8F%E7%A8%8B%E5%BA%8F/">
 
 <link rel="icon" href="/images/favicon.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"uni-app基础篇","name":"uni-app基础篇 | 大前端博客","description":"搭建uni-app项目前情提要微信开发者工具编写代码已经是过去式，不方便且语法已经老旧了，现在使用vsc来进行编码，使其转换成微信小程序代码，方便实时调试。 核心原理微信开发者工具内置了 文件监听（File Watcher） 机制，会自动检测项目目录下的文件变化并触发重新编译。因此只需要用 VS Code 编辑源码，微信开发者工具就会自动刷新预览，无需安装任...","url":"http://example.com/2026/07/31/uni-app/vsc%E7%BC%96%E8%BE%91%E5%B0%8F%E7%A8%8B%E5%BA%8F/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"大前端博客","url":"http://example.com/"},"mainEntityOfPage":"http://example.com/2026/07/31/uni-app/vsc%E7%BC%96%E8%BE%91%E5%B0%8F%E7%A8%8B%E5%BA%8F/","datePublished":"2026-07-31T07:09:37.769Z","dateModified":"2026-08-10T01:23:24.852Z","author":{"@type":"Person","name":"Jie"},"publisher":{"@type":"Organization","name":"大前端博客"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"uni-app基础篇","name":"uni-app基础篇 | 大前端博客","description":"搭建uni-app项目前情提要微信开发者工具编写代码已经是过去式，不方便且语法已经老旧了，现在使用vsc来进行编码，使其转换成微信小程序代码，方便实时调试。 核心原理微信开发者工具内置了 文件监听（File Watcher） 机制，会自动检测项目目录下的文件变化并触发重新编译。因此只需要用 VS Code 编辑源码，微信开发者工具就会自动刷新预览，无需安装任...","url":"http://example.com/2026/07/31/uni-app/vsc%E7%BC%96%E8%BE%91%E5%B0%8F%E7%A8%8B%E5%BA%8F/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"大前端博客","url":"http://example.com/"},"mainEntityOfPage":"http://example.com/2026/07/31/uni-app/vsc%E7%BC%96%E8%BE%91%E5%B0%8F%E7%A8%8B%E5%BA%8F/","datePublished":"2026-07-31T07:09:37.769Z","dateModified":"2026-08-10T03:03:24.250Z","author":{"@type":"Person","name":"Jie"},"publisher":{"@type":"Organization","name":"大前端博客"},"keywords":"uni-app"}</script>
 
 <script>
   (function () {
@@ -115,15 +116,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
 
           <span>首页</span>
-        </a>
-      
-    
-      
-        <a class="site-nav-link " href="/links/about">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
-
-          <span>友链</span>
         </a>
       
     
@@ -270,15 +262,6 @@
         
       
         
-          <a class="" href="/links/about">
-            
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
-
-            <span>友链</span>
-          </a>
-        
-      
-        
           <a class="" href="/about/">
             
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-user"></use></svg>
@@ -401,6 +384,13 @@
       <span class="meta-date">
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
 2026-07-31</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/uni-app/">#uni-app</a>
+        </span>
       
     </div>
   </header>
