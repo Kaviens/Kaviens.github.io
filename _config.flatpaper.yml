@@ -3,9 +3,9 @@ menu:
   首页:
     link: /
     icon: home
-  友链:
-    link: /links/about
-    icon: link
+  # 友链:
+  #   link: /links/about
+  #   icon: link
   关于:
     link: /about/
     icon: user
