@@ -1,26 +1,28 @@
 <!doctype html>
 
-<html lang="zh-CN">
+<html lang="zh-CN" data-fancybox-enabled="1">
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
 
-<title>分类：electron | 大前端博客</title>
-<meta name="description" content="分类「electron」收录 3 篇文章，包括Electron基础示例、桌面应用细节配置、web端唤醒桌面应用配置。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类：electron | 大前端博客">
-<meta property="og:url" content="http://example.com/categories/electron/">
+<title>uni-app开拓篇 | 大前端博客</title>
+<meta name="description" content="前情提要小程序无非几个点，学好后一路稳固前行 布局+——————————————+| ██████████████ 状态栏 (Status Bar) | ← 系统区域，显示时间、电量等+——————————————+| ← 标题文字 [操作按钮] | ← 导航栏 (Navigation Bar)+——————————————+| || || 内容栏 (Con...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="uni-app开拓篇 | 大前端博客">
+<meta property="og:url" content="http://example.com/2026/08/10/uni-app/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/">
 <meta property="og:site_name" content="大前端博客">
-<meta property="og:description" content="分类「electron」收录 3 篇文章，包括Electron基础示例、桌面应用细节配置、web端唤醒桌面应用配置。">
+<meta property="og:description" content="前情提要小程序无非几个点，学好后一路稳固前行 布局+——————————————+| ██████████████ 状态栏 (Status Bar) | ← 系统区域，显示时间、电量等+——————————————+| ← 标题文字 [操作按钮] | ← 导航栏 (Navigation Bar)+——————————————+| || || 内容栏 (Con...">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-10T01:18:30.067Z">
+<meta property="article:modified_time" content="2026-08-10T02:05:10.932Z">
 <meta property="article:author" content="Jie">
 <meta name="twitter:card" content="summary">
-<link rel="canonical" href="http://example.com/categories/electron/">
+<link rel="canonical" href="http://example.com/2026/08/10/uni-app/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/">
 
 <link rel="icon" href="/images/favicon.png" type="image/png">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","headline":"分类：electron | 大前端博客","name":"分类：electron | 大前端博客","description":"分类「electron」收录 3 篇文章，包括Electron基础示例、桌面应用细节配置、web端唤醒桌面应用配置。","url":"http://example.com/categories/electron/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"大前端博客","url":"http://example.com/"},"about":"分类：electron"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"uni-app开拓篇","name":"uni-app开拓篇 | 大前端博客","description":"前情提要小程序无非几个点，学好后一路稳固前行 布局+——————————————+| ██████████████ 状态栏 (Status Bar) | ← 系统区域，显示时间、电量等+——————————————+| ← 标题文字 [操作按钮] | ← 导航栏 (Navigation Bar)+——————————————+| || || 内容栏 (Con...","url":"http://example.com/2026/08/10/uni-app/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"大前端博客","url":"http://example.com/"},"mainEntityOfPage":"http://example.com/2026/08/10/uni-app/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/","datePublished":"2026-08-10T01:18:30.067Z","dateModified":"2026-08-10T02:05:10.932Z","author":{"@type":"Person","name":"Jie"},"publisher":{"@type":"Organization","name":"大前端博客"}}</script>
 
 <script>
   (function () {
@@ -56,12 +58,15 @@
   
 
   
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
 
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body
-  class="is-list tag-style-tape bg-style-default"
+  class="is-post tag-style-tape bg-style-default"
   data-default-accent="green"
   data-code-theme="simple"
   data-note-style="sticky"
@@ -132,7 +137,7 @@
       
     
       
-        <div class="site-nav-item has-children active">
+        <div class="site-nav-item has-children">
           <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
             
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
@@ -141,7 +146,7 @@
           </button>
           <div class="site-nav-menu" role="menu">
             
-              <a role="menuitem" class="active" href="/categories/">
+              <a role="menuitem" class="" href="/categories/">
                 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
 
@@ -217,7 +222,7 @@
 
 
   
-  <main class="paper-shell ">
+  <main class="paper-shell paper-shell--article">
     
 
 <aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
@@ -283,8 +288,8 @@
         
       
         
-          <div class="drawer-nav-group is-open active">
-            <button class="drawer-nav-parent" type="button" aria-expanded="true">
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
               
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
 
@@ -292,7 +297,7 @@
             </button>
             <div class="drawer-nav-children">
               
-                <a class="active" href="/categories/">
+                <a class="" href="/categories/">
                   
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
 
@@ -347,50 +352,28 @@
   
 
   
-    <section class="side-card categories-card">
-      <h2>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
-分类</h2>
-      
-        <a href="/categories/electron/">
-          <span class="dot dot-0"></span>
-          <strong>electron</strong>
-          <em>3</em>
-        </a>
-      
-        <a href="/categories/uni-app/">
-          <span class="dot dot-1"></span>
-          <strong>uni-app</strong>
-          <em>2</em>
-        </a>
-      
-        <a href="/categories/vue/">
-          <span class="dot dot-2"></span>
-          <strong>vue</strong>
-          <em>1</em>
-        </a>
-      
-    </section>
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
 
-    <section class="side-card tag-card">
-      <header class="tag-card__head">
-        <h2>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flame flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-flame"></use></svg>
-热门标签</h2>
-        <a class="tag-card__more" href="/tags/">
-          <span>查看全部</span>
+          </button>
+        </header>
+        <div class="toc-content">
           
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="toc-text">前情提要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%83%E5%B1%80"><span class="toc-text">布局</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%BC%E8%88%AA%E7%A4%BA%E4%BE%8B"><span class="toc-text">自定义导航示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8pages-json%E4%B8%AD%EF%BC%8C%E8%B0%81%E5%9C%A8%E7%AC%AC%E4%B8%80%E4%B8%AA%EF%BC%8C%E8%B0%81%E5%B0%B1%E6%98%AF%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%90%8E%E6%89%93%E5%BC%80%E7%9A%84%E9%A6%96%E9%A1%B5"><span class="toc-text">在pages.json中，谁在第一个，谁就是小程序后打开的首页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E8%88%AA%E6%A0%8F"><span class="toc-text">导航栏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%95%E9%83%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%89%E9%92%AE"><span class="toc-text">底部自定义按钮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E5%8C%BA%E8%AE%A1%E7%AE%97%EF%BC%8C%E4%B8%8D%E9%81%AE%E6%8C%A1%E4%B8%8A%E4%B9%9F%E4%B8%8D%E9%81%AE%E6%8C%A1%E4%B8%8B"><span class="toc-text">内容区计算，不遮挡上也不遮挡下</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E4%BB%B6"><span class="toc-text">插件</span></a></li></ol>
+          
+        </div>
+      </section>
+      
 
-        </a>
-      </header>
-      <div class="tag-cloud">
-        
-        
-          <a class="tag-chip tag-chip-0" href="/tags/electron/">electron</a>
-        
-      </div>
-    </section>
+
+    </div>
   
 
   
@@ -399,92 +382,140 @@
 
     <section class="paper-main">
       
-<section class="archive-paper">
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper">
   
-    <h1>electron</h1>
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/uni-app/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+        uni-app
+      </a>
+    
+    <h1>uni-app开拓篇</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-08-10</span>
+      
+    </div>
+  </header>
+
   
-  <div class="archive-list">
-    
-      <a class="archive-item" href="/2026/08/04/electron/electron-api-reference/">
-        <span>2026-08-04</span>
-        <strong>Electron基础示例</strong>
-        <em></em>
-      </a>
-    
-      <a class="archive-item" href="/2026/07/31/electron/%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E7%BB%86%E8%8A%82%E9%85%8D%E7%BD%AE/">
-        <span>2026-07-31</span>
-        <strong>桌面应用细节配置</strong>
-        <em></em>
-      </a>
-    
-      <a class="archive-item" href="/2026/07/27/electron/web%E7%AB%AF%E5%94%A4%E9%86%92%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE/">
-        <span>2026-07-27</span>
-        <strong>web端唤醒桌面应用配置</strong>
-        <em></em>
-      </a>
-    
+
+
+  <div class="article-content">
+    <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>小程序无非几个点，学好后一路稳固前行</p>
+<h2 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h2><h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>+——————————————+<br>| ██████████████ 状态栏 (Status Bar) | ← 系统区域，显示时间、电量等<br>+——————————————+<br>| ← 标题文字 [操作按钮] | ← 导航栏 (Navigation Bar)<br>+——————————————+<br>| |<br>| |<br>| 内容栏 (Content Area) | ← 页面主要内容区域<br>| |<br>| |<br>| |<br>+——————————————+<br>| 底部安全区 (Bottom Safe Area) | ← 适配全面屏手势操作，例如，iphon手机有些底部是有一条杠的<br>+——————————————+</p>
+<h2 id="自定义导航示例"><a href="#自定义导航示例" class="headerlink" title="自定义导航示例"></a>自定义导航示例</h2><h3 id="在pages-json中，谁在第一个，谁就是小程序后打开的首页"><a href="#在pages-json中，谁在第一个，谁就是小程序后打开的首页" class="headerlink" title="在pages.json中，谁在第一个，谁就是小程序后打开的首页"></a>在pages.json中，谁在第一个，谁就是小程序后打开的首页</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;pages&quot;: [</span><br><span class="line">//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages</span><br><span class="line">&#123; &quot;path&quot;: &quot;pages/index/index&quot;, &quot;style&quot;: &#123; &quot;navigationBarTitleText&quot;: &quot;首页&quot;,</span><br><span class="line">&quot;navigationStyle&quot;: &quot;custom&quot; // 使用自定义导航栏 &#125; &#125; ], &quot;globalStyle&quot;: &#123;</span><br><span class="line">&quot;navigationBarTextStyle&quot;: &quot;black&quot;, &quot;navigationBarTitleText&quot;: &quot;uni-app&quot;,</span><br><span class="line">&quot;navigationBarBackgroundColor&quot;: &quot;#F8F8F8&quot;, &quot;backgroundColor&quot;: &quot;#F8F8F8&quot; &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="导航栏"><a href="#导航栏" class="headerlink" title="导航栏"></a>导航栏</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//获取状态栏高度，导航栏不能阻挡状态栏</span><br><span class="line">const systemInfo = uni.getSystemInfoSync();</span><br><span class="line">const statusBarHeight = systemInfo.statusBarHeight;</span><br><span class="line"></span><br><span class="line">//获取胶囊按钮高度，胶囊按钮也就是小程序右上角的分享按钮</span><br><span class="line">const menuButton = uni.getMenuButtonBoundingClientRect();</span><br><span class="line">// 顶部间隙 = 胶囊按钮顶部 - 状态栏高度</span><br><span class="line">const gap = menuButton.top - statusBarHeight;</span><br><span class="line">// 导航内容区高度 = 胶囊按钮高度 + 顶部间隙 * 2</span><br><span class="line">const navContentHeight = menuButton.height + gap * 2;</span><br><span class="line"></span><br><span class="line">返回的都是px，而不是rpx，所以要用px单位</span><br><span class="line"></span><br><span class="line">//样式</span><br><span class="line">    &lt;view class=&quot;custom-nav&quot; :style=&quot;&#123; paddingTop: statusBarHeight + &#x27;px&#x27; &#125;&quot;&gt;</span><br><span class="line">      &lt;view class=&quot;nav-content&quot; :style=&quot;&#123; height: navContentHeight + &#x27;px&#x27; &#125;&quot;&gt;</span><br><span class="line">        &lt;view class=&quot;nav-back&quot; @click=&quot;goBack&quot;&gt;</span><br><span class="line">          &lt;text&gt;←&lt;/text&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">        &lt;text class=&quot;nav-title&quot;&gt;页面标题&lt;/text&gt;</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">    &lt;/view&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="底部自定义按钮"><a href="#底部自定义按钮" class="headerlink" title="底部自定义按钮"></a>底部自定义按钮</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 底部安全区的高度，单位 px，如果设备没有则返回 0 const bottomSafeHeight =</span><br><span class="line">systemInfos.safeAreaInsets?.bottom || 0;</span><br><span class="line"></span><br><span class="line">  &lt;!-- 底部固定按钮 + 安全区适配 --&gt;</span><br><span class="line">    &lt;view&gt;</span><br><span class="line">      &lt;view class=&quot;bottom-bar&quot; :style=&quot;&#123; bottom: bottomSafeHeight + &#x27;px&#x27; &#125;&quot;&gt;</span><br><span class="line">        &lt;button class=&quot;submit-btn&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">        &lt;!-- &lt;view class=&quot;safe-bottom&quot; /&gt; --&gt;</span><br><span class="line">      &lt;/view&gt;&lt;/view</span><br><span class="line">    &gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="内容区计算，不遮挡上也不遮挡下"><a href="#内容区计算，不遮挡上也不遮挡下" class="headerlink" title="内容区计算，不遮挡上也不遮挡下"></a>内容区计算，不遮挡上也不遮挡下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//状态栏和导航栏高度 navBarHeight=statusBarHeight + navContentHeight //</span><br><span class="line">底部安全区的高度，单位 px，如果设备没有则返回 0 const bottomSafeHeight =</span><br><span class="line">systemInfos.safeAreaInsets?.bottom || 0;</span><br><span class="line">100vh也就是一屏幕，减去底部安全区，底部按钮的高度+padding,再减去导航栏和状态栏高度，剩下就是内容区的高度，24rpx是根据情况进行调整</span><br><span class="line">&lt;scroll-view</span><br><span class="line">  scroll-y</span><br><span class="line">  class=&quot;main-content&quot;</span><br><span class="line">  :style=&quot;&#123;</span><br><span class="line">    height: `calc(100vh - 128rpx - 24rpx - $&#123;bottomSafeHeight&#125;px - $&#123;navBarHeight&#125;px )`,</span><br><span class="line">    marginTop: navBarHeight + &#x27;px&#x27;,</span><br><span class="line">  &#125;&quot;</span><br><span class="line">&gt;</span><br><span class="line">      &lt;!-- 内部布局用 rpx --&gt;</span><br><span class="line">      &lt;view class=&quot;card&quot; v-for=&quot;item in 20&quot;&gt;</span><br><span class="line">        &lt;text class=&quot;card-title&quot;&gt;标题&lt;/text&gt;</span><br><span class="line">        &lt;text class=&quot;card-desc&quot;&gt;描述内容&lt;/text&gt;</span><br><span class="line">      &lt;/view&gt;</span><br><span class="line">    &lt;/scroll-view&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>首先要安装 HBuilder X，因为uni-app是基于HBuilder X开发的，虽然我们后面使用vsc了，但是装这个是为了小程序的插件，因为小程序的插件下载是要通过这个软件来的，小程序的插件有些可以不用npm i下载依赖，可以直接去插件市场里面进行下载，下载下来也不和那些依赖一样，把下载下来的当成一个封装的的组件就行</p>
+<p><a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/">https://ext.dcloud.net.cn/</a></p>
+
   </div>
-</section>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
 
 
+  <nav class="article-actions">
+    
+      <a class="article-action article-action--prev" href="/2026/08/10/vue/index/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">vue大能篇</span>
+      </a>
+    
+    
+      <a class="article-action article-action--next" href="/2026/08/04/electron/electron-api-reference/">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">Electron基础示例</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/2026/07/31/uni-app/vsc%E7%BC%96%E8%BE%91%E5%B0%8F%E7%A8%8B%E5%BA%8F/">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="/images/cover/camera.webp" alt="" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">uni-app基础篇</strong>
+            <em class="related-card__date">2026-07-31</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
 
 
       
 
 
     </section>
-    
-      <aside class="paper-sidebar paper-sidebar--left">
-  
-  
-
-  <section class="side-card recent-card" data-random-posts-limit="5" data-random-posts-url="/flatpaper-random-posts.json" data-random-posts-current="/categories/electron/index.html">
-    <h2>
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shuffle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-shuffle"></use></svg>
-随机文章</h2>
-    <ul class="recent-list js-random-posts">
-      
-        <li>
-          <a class="recent-item" href="/2026/08/10/vue/index/">
-            <strong>vue大能篇</strong>
-            <em>2026-08-10</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/2026/08/10/uni-app/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/">
-            <strong>uni-app开拓篇</strong>
-            <em>2026-08-10</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/2026/08/04/electron/electron-api-reference/">
-            <strong>Electron基础示例</strong>
-            <em>2026-08-04</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/2026/07/31/electron/%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E7%BB%86%E8%8A%82%E9%85%8D%E7%BD%AE/">
-            <strong>桌面应用细节配置</strong>
-            <em>2026-07-31</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/2026/07/31/uni-app/vsc%E7%BC%96%E8%BE%91%E5%B0%8F%E7%A8%8B%E5%BA%8F/">
-            <strong>uni-app基础篇</strong>
-            <em>2026-07-31</em>
-          </a>
-        </li>
-      
-    </ul>
-  </section>
-
-
-</aside>
-
     
   </main>
 
